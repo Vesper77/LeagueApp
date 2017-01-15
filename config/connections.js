@@ -62,7 +62,7 @@ module.exports.connections = {
     port: 27017,
     user: '', //optional
     password: '', //optional
-    database: 'lol-api' //optional
+    database: 'lol_api' //optional
   },
 
   /***************************************************************************

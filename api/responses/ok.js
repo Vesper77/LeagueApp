@@ -14,9 +14,9 @@
 module.exports = function sendOK (data, options) {
 
   // Get access to `req`, `res`, & `sails`
-  var req = this.req;
-  var res = this.res;
-  var sails = req._sails;
+  let req = this.req;
+  let res = this.res;
+  let sails = req._sails;
 
   sails.log.silly('res.ok() :: Sending 200 ("OK") response');
 
@@ -33,16 +33,18 @@ module.exports = function sendOK (data, options) {
   // If it was omitted, use an empty object (`{}`)
   options = (typeof options === 'string') ? { view: options } : options || {};
 
+  let viewData = data;
+
   // Attempt to prettify data for views, if it's a non-error object
-  var viewData = data;
-  if (!(viewData instanceof Error) && 'object' == typeof viewData) {
-    try {
-      viewData = require('util').inspect(data, {depth: null});
-    }
-    catch(e) {
-      viewData = undefined;
-    }
-  }
+  // var viewData = data;
+  // if (!(viewData instanceof Error) && 'object' == typeof viewData) {
+  //   try {
+  //     viewData = require('util').inspect(data, {depth: null});
+  //   }
+  //   catch(e) {
+  //     viewData = undefined;
+  //   }
+  // }
 
   // If a view was provided in options, serve it.
   // Otherwise try to guess an appropriate view, or if that doesn't
@@ -50,6 +52,7 @@ module.exports = function sendOK (data, options) {
   if (options.view) {
     return res.view(options.view, { data: viewData, title: 'OK' });
   }
+
 
   // If no second argument provided, try to serve the implied view,
   // but fall back to sending JSON(P) if no view can be inferred.
