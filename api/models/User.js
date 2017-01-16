@@ -21,6 +21,12 @@ module.exports = {
       type: 'string',
       required: true,
       unique: true
+    },
+    frstname: {
+      type: 'string'
+    },
+    lastname: {
+      type: 'string'
     }
   }
 };
