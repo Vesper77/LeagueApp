@@ -27,6 +27,9 @@ module.exports = {
     },
     lastname: {
       type: 'string'
+    },
+    leagueAccount: {
+      type: 'string'
     }
   }
 };
