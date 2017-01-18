@@ -1,0 +1,18 @@
+
+<div class="container">
+    <div class="row">    
+        <div class="col-xs-7 col-xs-offset-10">
+		    <div class="input-group">
+             
+                <input type="hidden" name="search_param" value="all" id="search_param">         
+                <input type="text" id="search_panel" onkeyup="ChampionSearch()" class="form-control" name="x" placeholder="Search champion...">
+            </div>
+        </div>
+	</div>
+</div>
+<% _.each(champions,function(champions) { %>
+	<div class="col-md-3 up-20">
+		<img src=<%= champions.image %>>
+		<p><%= champions.name %></p>
+	</div>
+<%}) %>
