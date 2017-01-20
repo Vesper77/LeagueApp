@@ -33,7 +33,15 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/': 'HomeController.index',
-  '/info':'InfoController.index'
+  '/info':'InfoController.index',
+
+  'post /user/logout/': 'UserController.logout',
+
+  'post /user/login/': 'UserController.login',
+
+  'post /user/signup/': 'UserController.signup',
+
+  '/user/': 'UserController.home',
 
 
   /***************************************************************************
