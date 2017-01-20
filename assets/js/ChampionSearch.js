@@ -6,10 +6,10 @@ function ChampionSearch() {
 	y.forEach(function(item){
 		var championName = item.innerHTML;
 		if (championName.toLowerCase().indexOf(value) == -1) {
-			item.parentElement.style.visibility = "hidden";
+			item.parentElement.classList.add('hidden');
 		}
 		else {
-			item.parentElement.style.visibility = "visible";
+			item.parentElement.classList.remove('hidden');
 		}
 	});
 	

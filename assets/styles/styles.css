@@ -7,3 +7,9 @@
 #search_panel {
 	width:260px;
 }
+.hidden {
+	display:none;
+}
+.visible {
+	display:block;
+}

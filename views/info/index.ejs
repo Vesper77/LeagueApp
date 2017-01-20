@@ -12,7 +12,7 @@
 </div>
 <% _.each(champions,function(champions) { %>
 	<div class="col-md-3 up-20">
-		<img src=<%= champions.image %>>
+		<img src=<%= "/images/" + champions.image + ".png" %>>
 		<p><%= champions.name %></p>
 	</div>
 <%}) %>
