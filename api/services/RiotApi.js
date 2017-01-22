@@ -43,12 +43,33 @@ module.exports = {
 
       }
 
-      callback(JSON.parse(body));
-      return true;
+      let result = JSON.parse(body);
+
+      if (result && result['data']) {
+
+        let champions = [];
+
+        for(let i in result['data']) {
+
+          if (result['data'].hasOwnProperty(i)) {
+
+            champions.push(result['data'][i]);
+
+          }
+
+        }
+
+        callback(champions);
+
+      } else {
+
+        callback(null);
+
+      }
 
     }
 
-    request('https://global.api.pvp.net/api/lol/static-data/euw/v1.2/champion?api_key=' + Keys.riotApiKey, onResponse);
+    request('https://global.api.pvp.net/api/lol/static-data/euw/v1.2/champion?champData=image&api_key=' + Keys.riotApiKey, onResponse);
 
   }
 

@@ -26,7 +26,7 @@ module.exports = {
 
     req.logout();
 
-    return res.redirect('/user/')
+    return res.redirect('/user/');
 
   },
 

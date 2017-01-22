@@ -1,18 +1,17 @@
-
 <div class="container">
-    <div class="row">    
-        <div class="col-xs-7 col-xs-offset-10">
-		    <div class="input-group">
-             
-                <input type="hidden" name="search_param" value="all" id="search_param">         
-                <input type="text" id="search_panel" onkeyup="ChampionSearch()" class="form-control" name="x" placeholder="Search champion...">
-            </div>
-        </div>
-	</div>
+  <div class="row">
+    <div class="col-xs-7 col-xs-offset-10">
+      <div class="input-group">
+        <input type="hidden" name="search_param" value="all" id="search_param">
+        <input type="text" id="search_panel" onkeyup="ChampionSearch()" class="form-control" name="x" placeholder="Search champion...">
+      </div>
+    </div>
+  </div>
 </div>
-<% _.each(champions,function(champions) { %>
+
+<% _.each(champions,function(champion) { %>
 	<div class="col-md-3 up-20">
-		<img src=<%= "/images/" + champions.image + ".png" %>>
-		<p><%= champions.name %></p>
+		<img src=<%= "http://ddragon.leagueoflegends.com/cdn/7.2.1/img/champion/" + champion.image  %>>
+		<p><%= champion.name %></p>
 	</div>
 <%}) %>

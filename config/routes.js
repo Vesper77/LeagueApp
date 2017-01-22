@@ -31,17 +31,20 @@ module.exports.routes = {
   * `assets` directory)                                                      *
   *                                                                          *
   ***************************************************************************/
+  //
+  '/': 'InfoController.index',
+  //
+  // '/info':'InfoController.index',
 
-  '/': 'HomeController.index',
-  '/info':'InfoController.index',
+  // 'r|^/(en)*/*admin|lang': 'admin/AdminController.home',
 
-  'post /user/logout/': 'UserController.logout',
-
-  'post /user/login/': 'UserController.login',
-
-  'post /user/signup/': 'UserController.signup',
-
-  '/user/': 'UserController.home',
+  // 'post /user/logout': 'UserController.logout',
+  //
+  // 'post /user/login': 'UserController.login',
+  //
+  // 'post /user/signup': 'UserController.signup',
+  //
+  // '/user': 'UserController.home',
 
 
   /***************************************************************************
@@ -53,5 +56,12 @@ module.exports.routes = {
   * for configuration options and examples.                                  *
   *                                                                          *
   ***************************************************************************/
+
+  /*Admin Routes*/
+
+  '/admin': 'admin/AdminController.home',
+  'post /admin/login': 'admin/AdminController.login'
+  //
+  /*/Admin Routes/*/
 
 };

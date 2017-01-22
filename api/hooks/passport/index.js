@@ -1,4 +1,4 @@
-var passport = require('passport')
+const passport = require('passport')
   ,LocalStrategy = require('passport-local').Strategy;
 
 
@@ -22,13 +22,11 @@ module.exports = function(sails){
 
         passport.use('local', new LocalStrategy(
           {
-            usernameField: 'email',
+            usernameField: 'username',
             passwordField: 'password'
           },
 
           function(username, password, done) {
-
-            console.log(username, password);
 
             User.findOne({ username: username }, function (err, user) {
 
@@ -75,8 +73,7 @@ module.exports = function(sails){
       }
     }
   };
-}
-
+};
 
 function sessionFunctions(passport) {
 
