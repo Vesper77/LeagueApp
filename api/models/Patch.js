@@ -10,8 +10,16 @@ let sails = require('sails');
 module.exports = {
 
   attributes: {
-
+    version: {
+      type: 'string',
+      required: true
+    },
+    shortVersion: {
+      type: 'string',
+      required: true
+    }
   },
+
   tableName: sails.config.models.tablePrefix + '_patch'
 
 };

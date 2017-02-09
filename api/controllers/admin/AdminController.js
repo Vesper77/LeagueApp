@@ -12,7 +12,7 @@ module.exports = {
 
     if (req.user) {
 
-      Champion.count({}, function championCount(error, count) {
+      Champion.count({}, function championCount(error, champCount) {
 
         if (error) {
 
@@ -20,7 +20,15 @@ module.exports = {
 
         }
 
-        return res.ok({layout: 'layouts/admin', championsCount: count}, 'admin/home');
+        Patch.count({}, function patchCount(err, versCount) {
+
+          if (err) {
+            return res.negotiate(err);
+          }
+
+          return res.ok({layout: 'layouts/admin', championsCount: champCount, versionsCount: versCount}, 'admin/home');
+
+        });
 
       });
 
@@ -29,8 +37,6 @@ module.exports = {
       return res.ok({layout: 'layouts/admin'}, 'admin/login');
 
     }
-
-
 
   },
 

@@ -38,6 +38,8 @@ module.exports = {
       defaultsTo: 'en',
       enum: ['ru', 'en']
     }
-  }
+  },
+
+  tableName: sails.config.models.tablePrefix + '_user'
 };
 

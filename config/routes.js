@@ -60,8 +60,10 @@ module.exports.routes = {
   /*Admin Routes*/
 
   '/admin': 'admin/AdminController.home',
-  'post /admin/login': 'admin/AdminController.login'
-  //
+  'post /admin/login': 'admin/AdminController.login',
+  'post /admin/champions/fill': 'admin/ChampionController.fill',
+  'post /admin/version/fill': 'admin/VersionsController.fill'
+
   /*/Admin Routes/*/
 
 };

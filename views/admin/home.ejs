@@ -1,6 +1,3 @@
-<%
-%>
-
 <div class="jumbotron">
     <h1>Чемпионы</h1>
 
@@ -11,5 +8,17 @@
     <form action="<%= sails.config.appUrl + 'admin/champions/fill' %>" method="post">
         <button type="submit" class="btn btn-primary btn-lg">Заполнить заново</button>
     </form>
+
+</div>
+<div class="jumbotron">
+  <h1>Версии</h1>
+
+  <p>
+    В базе на данным момент: <%= versionsCount %> версий
+  </p>
+
+  <form action="<%= sails.config.appUrl + 'admin/versions/fill' %>" method="post">
+    <button type="submit" class="btn btn-primary btn-lg">Заполнить заново</button>
+  </form>
 
 </div>

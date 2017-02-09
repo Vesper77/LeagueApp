@@ -1,4 +1,3 @@
-"use strict";
 let request = require('request');
 
 module.exports = {
@@ -23,7 +22,17 @@ module.exports = {
 
     }
 
-    request('https://global.api.pvp.net/api/lol/static-data/euw/v1.2/versions?api_key=' + Keys.riotApiKey, onResponse);
+    let key = sails.config.local.riotApiKey;
+
+    if (key) {
+
+      request('https://global.api.pvp.net/api/lol/static-data/euw/v1.2/versions?api_key=' + key, onResponse);
+
+    } else {
+
+      callback(null);
+
+    }
 
   },
   getChampions: function(callback) {
@@ -69,7 +78,18 @@ module.exports = {
 
     }
 
-    request('https://global.api.pvp.net/api/lol/static-data/euw/v1.2/champion?champData=image&api_key=' + Keys.riotApiKey, onResponse);
+
+    let key = sails.config.local.riotApiKey;
+
+    if (key) {
+
+      request('https://global.api.pvp.net/api/lol/static-data/euw/v1.2/champion?champData=image&api_key=' + key, onResponse);
+
+    } else {
+
+      callback(null);
+
+    }
 
   }
 
