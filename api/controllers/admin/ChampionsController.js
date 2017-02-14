@@ -1,8 +1,10 @@
+const RiotApi = sails.services.riotapi;
+
 module.exports = {
 
   fill: function (req, res) {
 
-    Champion.destroy({}).exec(function(err) {
+    sails.models.champion.destroy({}).exec(function(err) {
 
       if (err) {
         return res.negotiate(err);
@@ -26,7 +28,7 @@ module.exports = {
 
           if (dataToInsert.length > 0) {
 
-            Champion.create(dataToInsert).exec(function(err) {
+            sails.models.champion.create(dataToInsert).exec(function(err) {
 
               if (err) {
                 return res.negotiate(err);

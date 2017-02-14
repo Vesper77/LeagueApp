@@ -1,12 +1,17 @@
 const cheerio = require('cheerio');
 const fs = require('fs');
+const request = require('request');
 
-module.exports = function(version) {
+module.exports = new PatchParser();
+
+
+function PatchParser(version) {
+
+  let $ = null;
 
   this.currentVersion = version;
 
   this.getUrlVersion = function() {
-
 
     if (this.currentVersion) {
 
@@ -20,24 +25,36 @@ module.exports = function(version) {
 
   this.getHtml = function(next) {
 
-    fs.readFile('data/Patch 7.2 Notes _ League of Legends.html', 'utf-8', function (err, res) {
+    function onResponse(err, response, body) {
 
-      if (err !== null) {
-
+      if (err || response.statusCode != 200) {
         next(null);
-        return true;
-
+        return false;
       }
 
-      next(res);
+      next(body);
 
-    });
+    }
+
+    let options = {
+      url: this.getUrlVersion(),
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'
+      }
+    };
+
+    request(options, onResponse);
 
   };
 
   this.processHtml = function(next) {
 
     function process(html){
+
+      if (!html) {
+        next(null);
+        return false;
+      }
 
       $ = cheerio.load(html);
 
@@ -63,9 +80,6 @@ module.exports = function(version) {
 
   };
 
-  let $ = null;
-
-  // Process html there
   function processChampionChangeBlock($block) {
 
     let $championTitle = $block.find('h3.change-title');
@@ -119,4 +133,4 @@ module.exports = function(version) {
 
   }
 
-};
+}

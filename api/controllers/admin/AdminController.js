@@ -1,59 +1,30 @@
 const url = require('url');
-/**
- * UserController
- *
- * @description :: Server-side logic for managing Users
- * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
- */
+const layout = 'layouts/admin';
 
 module.exports = {
-
   home: function(req, res) {
 
-    if (req.user) {
+    sails.models.champion.count({}, function championCount(error, champCount) {
 
-      Champion.count({}, function championCount(error, champCount) {
+      if (error) {
 
-        if (error) {
+        return res.negotiate(error);
 
-          return res.negotiate(error);
+      }
 
+      sails.models.patch.find().exec(function(err, items) {
+
+        if (err) {
+          return res.negotiate(err);
         }
 
-        Patch.count({}, function patchCount(err, versCount) {
+        let versCount = items.length;
 
-          if (err) {
-            return res.negotiate(err);
-          }
-
-          return res.ok({layout: 'layouts/admin', championsCount: champCount, versionsCount: versCount}, 'admin/home');
-
-        });
+        return res.ok({layout: layout, championsCount: champCount, versionsCount: versCount, versions: items}, 'admin/home');
 
       });
 
-    } else {
-
-      return res.ok({layout: 'layouts/admin'}, 'admin/login');
-
-    }
-
-  },
-
-  login: function(req, res){
-
-    res.login({
-      successRedirect: '/admin/'
     });
 
-  },
-
-  logout: function(req, res) {
-
-    req.logout();
-
-    return res.redirect('/')
-
-  },
-
+  }
 };

@@ -1,4 +1,8 @@
 {
   "welcome": "Welcome",
-  "please_log_in": "Please log in."
+  "please_log_in": "Please log in",
+  "register": "Register",
+  "email": "Email",
+  "username": "Username",
+  "password": "Password"
 }

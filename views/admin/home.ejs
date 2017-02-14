@@ -22,3 +22,21 @@
   </form>
 
 </div>
+<div class="jumbotron">
+  <h1>Запарсить патч</h1>
+
+  <form action="<%= sails.config.appUrl + 'admin/versions/parse' %>" method="post">
+
+    <p> Выберите версию
+      <select name="version">
+        <% for(var i = 0; i < versionsCount; i++){%>
+          <option value="<%= versions[i].shortVersion %>"><%= versions[i].version %></option>
+        <% } %>
+      </select>
+    </p>
+
+    <button type="submit" class="btn btn-primary btn-lg">Заполнить заново</button>
+
+  </form>
+
+</div>

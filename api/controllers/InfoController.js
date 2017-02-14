@@ -1,8 +1,10 @@
+const RiotApi = sails.services.riotapi;
+
 module.exports = {
 
   index: function(req, res) {
 
-    Champion.find().exec(
+    sails.models.champion.find().exec(
 
       function (err, champions) {
 

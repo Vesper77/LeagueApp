@@ -8,46 +8,44 @@ const url = require('url');
 
 module.exports = {
 
-  home: function(req, res) {
-
-    return res.ok({user: req.user});
-
-  },
-
   login: function(req, res){
 
-    res.login({
-      successRedirect: '/user/'
-    });
+    if (req.method === 'POST') {
 
+      res.login({
+        successRedirect: '/admin/'
+      });
+
+    } else {
+
+      res.ok('user/login');
+
+    }
   },
 
   logout: function(req, res) {
 
     req.logout();
 
-    return res.redirect('/user/');
+    return res.redirect('/')
 
   },
 
   signup: function(req, res) {
 
-    User.create(req.params.all()).exec(
+    if (req.method === 'POST') {
 
-      function(err, user) {
-        if (err) return res.negotiate(err);
+      sails.models.user.create(req.params.all()).exec( function(err, user) {
 
-        req.login(user, function(err) {
+        res.redirect('/user/login/');
 
-          if (err) return res.negotiate(err);
+      });
 
-          return res.redirect('/user/');
+    } else {
 
-        });
+      res.ok('user/register');
 
-      }
-
-    );
+    }
 
   }
 };

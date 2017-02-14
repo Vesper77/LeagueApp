@@ -1,0 +1,29 @@
+<div class="page-header">
+  <h1><%= __('register') %></h1>
+</div>
+
+<div>
+
+  <form method="post" class="ajax-form" action="<%= sails.config.appUrl + 'user/register/' %>">
+
+    <div class="form-group">
+      <label for="username"><%= __('username') %></label>
+      <input type="text" id="username" name="username" placeholder="<%= _('username') %>" class="form-control" />
+    </div>
+
+    <div class="form-group">
+      <label for="email"><%= __('email') %></label>
+      <input type="text" id="username" name="email" placeholder="<%= _('email') %>" class="form-control" />
+    </div>
+
+    <div class="form-group">
+      <label for="password"><%= __('password') %></label>
+      <input type="text" id="password" name="password" placeholder="<%= __('password') %>" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary"><%= __('submit') %></button>
+
+  </form>
+
+</div>
+

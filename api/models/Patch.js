@@ -1,5 +1,3 @@
-let sails = require('sails');
-
 /**
  * Patch.js
  *
@@ -8,7 +6,6 @@ let sails = require('sails');
  */
 
 module.exports = {
-
   attributes: {
     version: {
       type: 'string',
@@ -19,8 +16,6 @@ module.exports = {
       required: true
     }
   },
-
   tableName: sails.config.models.tablePrefix + '_patch'
-
 };
 

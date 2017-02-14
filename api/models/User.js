@@ -24,7 +24,7 @@ module.exports = {
       required: true,
       unique: true
     },
-    frstname: {
+    firstname: {
       type: 'string'
     },
     lastname: {
@@ -39,7 +39,6 @@ module.exports = {
       enum: ['ru', 'en']
     }
   },
-
   tableName: sails.config.models.tablePrefix + '_user'
 };
 

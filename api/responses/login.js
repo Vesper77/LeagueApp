@@ -1,4 +1,5 @@
-let passport = require('passport');
+const passport = require('passport');
+const _ =  require('lodash');
 
 /**
  * res.login()
@@ -25,6 +26,8 @@ module.exports = function login(opts) {
 
     return req.login(user, function(err) {
       if (err) return res.negotiate(err);
+
+
       return res.redirect(opts.successRedirect);
     });
 

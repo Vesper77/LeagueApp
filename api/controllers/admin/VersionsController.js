@@ -1,8 +1,11 @@
+const _ = require('lodash');
+const RiotApi = sails.services.riotapi;
+
 module.exports = {
 
   fill: function(req, res) {
 
-    Patch.destroy({}).exec(function(err) {
+    sails.models.patch.destroy({}).exec(function(err) {
 
       if (err) {
         return res.negotiate(err);
@@ -15,16 +18,18 @@ module.exports = {
 
         if (versions) {
 
-          let regexp = new RegExp(/^\d+\.\d+/);
-
           versions.forEach(function(item) {
 
-            let shortVersion = regexp.exec(item);
+            let shortVersion = RiotApi.getShortVersion(item);
 
-            dataToInsert.push({
-              version: item,
-              shortVersion: shortVersion
-            });
+            if (_.isString(shortVersion)) {
+
+              dataToInsert.push({
+                version: item,
+                shortVersion: shortVersion
+              });
+
+            }
 
           });
 
@@ -32,7 +37,7 @@ module.exports = {
 
         if (dataToInsert.length > 0) {
 
-          Patch.create(dataToInsert).exec(function(err) {
+          sails.models.patch.create(dataToInsert).exec(function(err) {
 
             if (err) {
               return res.negotiate(err);
@@ -53,6 +58,48 @@ module.exports = {
       });
 
     })
+  },
+  parsePatch: function(req, res) {
+
+    let version = req.param('version');
+
+    if (version) {
+
+      RiotApi.getPatchChanges(version, function(result) {
+
+        result.forEach(function (hero) {
+
+          hero.attributesChanges.forEach(function(attributeChange) {
+
+            let itemToInsert = {
+              attribute: attributeChange.attribute,
+              isNew: attributeChange.isNew,
+              change: attributeChange.attributeChange,
+              before: attributeChange.attributeBefore,
+              after: attributeChange.attributeAfter
+            };
+
+            sails.models.attributechanges.create(itemToInsert).exec(function(err, res) {
+
+              if (err == null) {
+                return false;
+              }
+
+            });
+
+          });
+
+        });
+
+      });
+
+      return res.redirect('/admin/');
+
+    } else {
+
+      return res.redirect('/admin/');
+
+    }
 
 
   }

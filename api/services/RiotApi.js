@@ -1,4 +1,5 @@
-let request = require('request');
+const request = require('request');
+const _ = require('lodash');
 
 module.exports = {
 
@@ -78,7 +79,6 @@ module.exports = {
 
     }
 
-
     let key = sails.config.local.riotApiKey;
 
     if (key) {
@@ -90,6 +90,42 @@ module.exports = {
       callback(null);
 
     }
+
+  },
+  getPatchChanges: function(version, callback) {
+
+    if (typeof callback != 'function') {
+      return false;
+    }
+
+    let PatchParser = sails.services.patchparser;
+
+    PatchParser.currentVersion = this.getShortVersion(version);
+
+    PatchParser.processHtml(function(result) {
+
+      callback(result);
+
+    });
+
+  },
+  getShortVersion: function(version) {
+
+    if (_.isString(version)) {
+
+      let reqExp = new RegExp(/^\d+\.\d+/);
+
+      let shortVersion = reqExp.exec(version);
+
+      if (_.isArray(shortVersion)) {
+
+        return shortVersion[0].replace('.', '');
+
+      }
+
+    }
+
+    return version;
 
   }
 

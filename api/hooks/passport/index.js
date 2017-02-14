@@ -28,7 +28,7 @@ module.exports = function(sails){
 
           function(username, password, done) {
 
-            User.findOne({ username: username }, function (err, user) {
+            sails.models.user.findOne({ username: username }, function (err, user) {
 
               if (err) { return done(err); }
 
@@ -82,7 +82,7 @@ function sessionFunctions(passport) {
   });
 
   passport.deserializeUser(function(id, done) {
-    User.findOne(id, function(err, user) {
+    sails.models.user.findOne(id, function(err, user) {
       done(err, user);
     });
   });

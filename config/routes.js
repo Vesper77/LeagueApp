@@ -31,21 +31,6 @@ module.exports.routes = {
   * `assets` directory)                                                      *
   *                                                                          *
   ***************************************************************************/
-  //
-  '/': 'InfoController.index',
-  //
-  // '/info':'InfoController.index',
-
-  // 'r|^/(en)*/*admin|lang': 'admin/AdminController.home',
-
-  // 'post /user/logout': 'UserController.logout',
-  //
-  // 'post /user/login': 'UserController.login',
-  //
-  // 'post /user/signup': 'UserController.signup',
-  //
-  // '/user': 'UserController.home',
-
 
   /***************************************************************************
   *                                                                          *
@@ -57,13 +42,23 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  /*Admin Routes*/
+  /** Frontend routes **/
+
+  '/user/login': 'UserController.login',
+  '/user/register': 'UserController.signup',
+  '/': 'InfoController.index',
+
+  /** /Frontend routes/**/
+
+
+  /** Admin Routes **/
 
   '/admin': 'admin/AdminController.home',
-  'post /admin/login': 'admin/AdminController.login',
+  'post /user/logout': 'UserController.logout',
   'post /admin/champions/fill': 'admin/ChampionController.fill',
-  'post /admin/version/fill': 'admin/VersionsController.fill'
+  'post /admin/versions/fill': 'admin/VersionsController.fill',
+  'post /admin/versions/parse': 'admin/VersionsController.parsePatch'
 
-  /*/Admin Routes/*/
+  /** /Admin Routes/ **/
 
 };
