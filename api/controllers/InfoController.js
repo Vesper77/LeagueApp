@@ -8,7 +8,9 @@ module.exports = {
 
       function (err, champions) {
 
-        if (err) return res.send(500);
+        if (err) {
+          res.negotiate(err);
+        }
 
         res.ok({ champions: champions});
 

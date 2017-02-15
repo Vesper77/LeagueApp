@@ -4,5 +4,7 @@
   "register": "Register",
   "email": "Email",
   "username": "Username",
-  "password": "Password"
+  "password": "Password",
+  "there_no_champions": "There no champions",
+  "champion": "Champion"
 }

@@ -55,7 +55,7 @@ module.exports.routes = {
 
   '/admin': 'admin/AdminController.home',
   'post /user/logout': 'UserController.logout',
-  'post /admin/champions/fill': 'admin/ChampionController.fill',
+  'post /admin/champions/fill': 'admin/ChampionsController.fill',
   'post /admin/versions/fill': 'admin/VersionsController.fill',
   'post /admin/versions/parse': 'admin/VersionsController.parsePatch'
 

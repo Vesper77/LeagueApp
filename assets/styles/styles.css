@@ -1,15 +1,25 @@
-.hidden {
-	display:none;
+body.content {
+  background-color: #f1f1f1;
 }
-.up-20 {
-	margin-top:20px;
+/** Champions **/
+.champions {
+  text-align: center;
 }
-#search_panel {
-	width:260px;
+.champions .champions__search {
+  margin-bottom: 20px;
 }
-.hidden {
-	display:none;
+.champions .champion-block {
+  margin-bottom: 10px;
 }
-.visible {
-	display:block;
+.champions .champion-block .champion-block__inner {
+  padding: 5px;
+  display: inline-block;
+  text-align: center;
+  /*border: 1px solid #ccc;*/
+  /*background-color: #fff;*/
 }
+.champions .champion-block .champion-block__inner > a {
+  text-decoration: none;
+  color: #101010;
+}
+/** /Champions/ **/

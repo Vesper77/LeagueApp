@@ -1,17 +1,43 @@
-<div class="container">
-  <div class="row">
-    <div class="col-xs-7 col-xs-offset-10">
-      <div class="input-group">
-        <input type="hidden" name="search_param" value="all" id="search_param">
-        <input type="text" id="search_panel" onkeyup="ChampionSearch()" class="form-control" name="x" placeholder="Search champion...">
-      </div>
+<%
+/**
+ * @var {function} __
+ * @param {string}
+ * @return {string}
+ */
+/**
+ * @var {Array} champions
+ */
+%>
+
+<div class="champions" id="champions">
+
+  <div class="champions__search">
+    <div class="input-group input-group-lg">
+      <span class="input-group-addon" id="champion-search--pre"><%= __('champion') %></span>
+      <input type="text" class="form-control champions__search-text" id="champion-search" aria-describedby="champion-search--pre">
     </div>
   </div>
+
+  <% if (champions && Array.isArray(champions)) { %>
+
+    <% champions.forEach(function(champion) {  %>
+
+      <div class="col-md-3 col-xs-6 col-sm-4 col-lg-2 champion-block" data-name="<%= champion.name %>">
+        <div class="champion-block__inner">
+          <a href="#" onclick="return false;">
+            <img class="champion-block__image" src="http://ddragon.leagueoflegends.com/cdn/7.2.1/img/champion/<%- champion.image %>"/>
+            <p class="champion-block__name"><%= champion.name %></p>
+          </a>
+        </div>
+      </div>
+
+    <% }) %>
+
+  <% } else {%>
+
+    <%= __('there_no_champions') %>
+
+  <% }%>
+
 </div>
 
-<% _.each(champions,function(champion) { %>
-	<div class="col-md-3 up-20">
-		<img src=<%= "http://ddragon.leagueoflegends.com/cdn/7.2.1/img/champion/" + champion.image  %>>
-		<p><%= champion.name %></p>
-	</div>
-<%}) %>

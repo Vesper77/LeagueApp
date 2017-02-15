@@ -276,6 +276,17 @@ module.exports = function(grunt) {
       files: {
         'views/**/*.jade': ['.tmp/public/jst.js']
       }
+    },
+    devRiotTpl: {
+      options: {
+        startTag: '<!-- RIOT TEMPLATES -->',
+        endTag: '<!-- RIOT TEMPLATES END -->',
+        fileTmpl: '<script type="riot/tag" src="%s"></script>',
+        appRoot: '.tmp/public'
+      },
+      files: {
+        'views/**/*.ejs': require('../pipeline').riotTplFilesToInject
+      }
     }
   });
 

@@ -19,8 +19,6 @@
 var cssFilesToInject = [
   'styles/**/*.css'
 ];
-
-
 // Client-side javascript files to inject in order
 // (uses Grunt-style wildcard/glob/splat expressions)
 var jsFilesToInject = [
@@ -31,7 +29,7 @@ var jsFilesToInject = [
   // Dependencies like jQuery, or Angular are brought in here
   'js/dependencies/jquery-*.js',
   'js/dependencies/bootstrap.min.js',
-
+  'js/dependencies/riot+compile.min.js',
   // 'js/dependencies/**/*.js',
 
   // All of the rest of your client-side js files
@@ -39,6 +37,10 @@ var jsFilesToInject = [
   'js/*.js'
 ];
 
+//Riot template
+var riotTemplates = [
+  'tags/*.tag'
+];
 
 // Client-side HTML templates are injected using the sources below
 // The ordering of these templates shouldn't matter.
@@ -52,12 +54,6 @@ var jsFilesToInject = [
 var templateFilesToInject = [
   'templates/**/*.html'
 ];
-
-
-
-
-
-
 
 // Default path for public folder (see documentation for more information)
 var tmpPath = '.tmp/public/';
@@ -85,6 +81,13 @@ module.exports.templateFilesToInject = templateFilesToInject.map(function(tplPat
     return require('path').join('!assets/', tplPath.substr(1));
   }
   return require('path').join('assets/',tplPath);
+});
+module.exports.riotTplFilesToInject = riotTemplates.map(function(riotTplPath) {
+  // If we're ignoring the file, make sure the ! is at the beginning of the path
+  if (riotTplPath[0] === '!') {
+    return require('path').join('!.tmp/public/', riotTplPath.substr(1));
+  }
+  return require('path').join('.tmp/public/', riotTplPath);
 });
 
 

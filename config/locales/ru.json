@@ -4,5 +4,7 @@
   "register": "Регистрация",
   "email": "Email",
   "username": "Имя пользователя",
-  "password": "Пароль"
+  "password": "Пароль",
+  "there_no_champions": "Здесь нет чемпионов которых ты ищещь",
+  "champion": "Чемпион"
 }
