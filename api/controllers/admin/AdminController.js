@@ -20,7 +20,17 @@ module.exports = {
 
         let versCount = items.length;
 
-        return res.ok({layout: layout, championsCount: champCount, versionsCount: versCount, versions: items}, 'admin/home');
+        sails.models.items.count({}, function itemCount(error, itemsCount) {
+
+          if (error) {
+
+            return res.negotiate(error);
+
+          }
+
+        return res.ok({layout: layout,itemsCount: itemsCount, championsCount: champCount, versionsCount: versCount, versions: items}, 'admin/home');
+
+        });
 
       });
 

@@ -1,15 +1,29 @@
 <div class="jumbotron">
-    <h1>Чемпионы</h1>
+  <h1>Чемпионы</h1>
 
-    <p>
-        В базе на данным момент: <%= championsCount %> чемпионов
-    </p>
+  <p>
+    В базе на данным момент: <%= championsCount %> чемпионов
+  </p>
 
-    <form action="<%= sails.config.appUrl + 'admin/champions/fill' %>" method="post">
-        <button type="submit" class="btn btn-primary btn-lg">Заполнить заново</button>
-    </form>
+  <form action="<%= sails.config.appUrl + 'admin/champions/fill' %>" method="post">
+    <button type="submit" class="btn btn-primary btn-lg">Заполнить заново</button>
+  </form>
 
 </div>
+
+<div class="jumbotron">
+  <h1>Предметы</h1>
+
+  <p>
+    В базе на данным момент: <%= itemsCount %> предметов
+  </p>
+
+  <form action="<%= sails.config.appUrl + 'admin/items/fill' %>" method="post">
+    <button type="submit" class="btn btn-primary btn-lg">Заполнить заново</button>
+  </form>
+
+</div>
+
 <div class="jumbotron">
   <h1>Версии</h1>
 
