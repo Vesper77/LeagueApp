@@ -1,5 +1,5 @@
 const RiotApi = sails.services.riotapi;
-
+//TODO: add item stats
 module.exports = {
 
   fill: function (req, res) {
@@ -18,14 +18,16 @@ module.exports = {
 
           items.forEach(function(obj) {
 
-            dataToInsert.push({
-              name: obj.name,
-              riotId: obj.id,
-              image: obj.image,
-              cost: obj.gold,
-              description: obj.sanitizedDescription,
-              stats: obj.stats,
-            });
+            if (obj.name != null && obj.sanitizedDescription != null) {
+
+              dataToInsert.push({
+                name: obj.name,
+                riotId: obj.id,
+                description: obj.sanitizedDescription,
+                image: obj.image.full,
+              });
+
+            }
 
           });
 
@@ -48,7 +50,9 @@ module.exports = {
           }
 
         }
-
+        else {
+          res.redirect('/admin/');
+        }
       });
 
     });

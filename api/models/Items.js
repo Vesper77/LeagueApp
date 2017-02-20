@@ -11,26 +11,21 @@ module.exports = {
       type: 'string',
       required: true,
     },
-    id: {
+    riotId: {
       type: 'int',
-      required: true
-    },
-    image: {
-      type: 'string',
-      required: true
-    },
-    cost: {
-      type: 'double',
       required: true
     },
     description: {
       type: 'string',
       required: true
     },
-    stats: {
+    image: {
       type: 'string',
       required: true
-    },
+    }
+
+
+
 
   },
   tableName: sails.config.models.tablePrefix + '_item'

@@ -111,6 +111,8 @@ module.exports = {
       }
 
       let result = JSON.parse(body);
+      console.log('Body:' + result);
+
 
       if (result && result['data']) {
 
@@ -125,11 +127,11 @@ module.exports = {
           }
 
         }
-
+        console.log('Item got:' + items);
         callback(items);
 
       } else {
-
+        console.log('Item Error');
         callback(null);
 
       }
@@ -140,8 +142,7 @@ module.exports = {
 
     if (key) {
 
-      request('https://global.api.pvp.net/api/lol/static-data/euw/v1.2/item&api_key=' + key, onResponse);
-      console.log('Item got:' + onResponse);
+      request('https://global.api.pvp.net/api/lol/static-data/euw/v1.2/item?itemListData=all&api_key=' + key, onResponse);
 
     } else {
 

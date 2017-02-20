@@ -17,10 +17,10 @@
 
   <% items.forEach(function(item) {  %>
 
-  <div class="col-md-3 col-xs-6 col-sm-4 col-lg-2 champion-block" data-name="<%= item.name %>">
+  <div class="col-md-3 col-xs-6 col-sm-4 col-lg-2 item-block" data-name="<%= item.name %>">
     <div class="champion-block__inner">
       <a href="#" onclick="return false;">
-        <img class="champion-block__image" ><%- item.image %>"/>
+        <img class="champion-block__image" src="http://ddragon.leagueoflegends.com/cdn/7.2.1/img/item/<%- item.image %>"/>
         <p class="champion-block__name"><%= item.name %></p>
       </a>
     </div>

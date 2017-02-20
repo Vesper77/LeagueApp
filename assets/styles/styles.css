@@ -23,3 +23,9 @@ body.content {
   color: #101010;
 }
 /** /Champions/ **/
+
+/** Items **/
+.item-block {
+  max-height : 93px;
+  margin-bottom: 30px;
+}
