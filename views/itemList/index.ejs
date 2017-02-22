@@ -5,23 +5,28 @@
  * @return {string}
  */
 /**
- * @var {Array} champions
+ * @var {Array} items
  */
 %>
 
-<div class="champions" id="champions">
+<div class="items" id="items">
 
-
+  <div class="items__search">
+    <div class="input-group input-group-lg">
+      <span class="input-group-addon" id="item-search--pre"><%= __('item') %></span>
+      <input type="text" class="form-control items__search-text" id="item-search" aria-describedby="item-search--pre">
+    </div>
+  </div>
 
   <% if (items && Array.isArray(items)) { %>
 
   <% items.forEach(function(item) {  %>
 
   <div class="col-md-3 col-xs-6 col-sm-4 col-lg-2 item-block" data-name="<%= item.name %>">
-    <div class="champion-block__inner">
+    <div class="item-block__inner">
       <a href="#" onclick="return false;">
-        <img class="champion-block__image" src="http://ddragon.leagueoflegends.com/cdn/7.2.1/img/item/<%- item.image %>"/>
-        <p class="champion-block__name"><%= item.name %></p>
+        <img class="item-block__image" src="http://ddragon.leagueoflegends.com/cdn/7.2.1/img/item/<%- item.image %>"/>
+        <p class="item-block__name"><%= item.name %></p>
       </a>
     </div>
   </div>
@@ -30,7 +35,7 @@
 
   <% } else {%>
 
-  <%= __('there_no_champions') %>
+  <%= __('there_no_items') %>
 
   <% }%>
 

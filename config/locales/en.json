@@ -6,5 +6,9 @@
   "username": "Username",
   "password": "Password",
   "there_no_champions": "There no champions",
-  "champion": "Champion"
+  "champion": "Champion",
+  "item": "Items",
+  "there_no_items": "There no items"
+
+
 }
