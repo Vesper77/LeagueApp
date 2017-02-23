@@ -46,7 +46,7 @@ module.exports.routes = {
 
   '/user/login': 'UserController.login',
   '/user/register': 'UserController.signup',
-  '/': 'InfoController.index',
+  '/': 'ChampionsController.index',
 
   /** /Frontend routes/**/
 

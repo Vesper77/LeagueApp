@@ -15,24 +15,28 @@ module.exports = {
 
   home: function(req, res) {
 
-    const champRepo = RepositoryStorage.getChampionRepository();
-    const patchRepo = RepositoryStorage.getPatchRepository();
+    let champRepo = RepositoryStorage.getChampionRepository();
+    let patchRepo = RepositoryStorage.getPatchRepository();
 
-    champRepo.count(function championCount(error, champCount) {
+    let championsCount = 0;
 
-      if (error) { return res.negotiate(error); }
+    function errorCatch(err) { return res.negotiate(err); }
+    function champsCount(count) {
 
-      patchRepo.getMany(function(err, items) {
+      championsCount = count;
 
-        if (err) { return res.negotiate(err); }
+      return patchRepo.getMany();
 
-        let versCount = items.length;
+    }
+    function getPatches(patches) {
 
-        return res.ok({layout: layout, championsCount: champCount, versionsCount: versCount, versions: items}, 'admin/home');
+      let patchesCount = patches.length;
 
-      });
+      return res.ok({layout: layout, championsCount: championsCount, versionsCount: patchesCount, versions: patches}, 'admin/home');
 
-    });
+    }
+
+    return champRepo.count().then(champsCount, errorCatch).then(getPatches, errorCatch);
 
   }
 

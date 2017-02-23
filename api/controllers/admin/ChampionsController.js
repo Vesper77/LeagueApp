@@ -4,7 +4,7 @@
  * @member {RiotApi} RiotApi
  */
 /**
- * @member {RepositoryStorage} RepositoryStorage
+ * @member {ApiDataHandler} ApiDataHandler
  */
 
 /**
@@ -15,51 +15,14 @@ module.exports = {
 
   fill: function (req, res) {
 
-    let championRepo = RepositoryStorage.getChampionRepository();
+    function redir() { return res.redirect('/admin/'); }
+    function error(err) {
+      return res.negotiate(err);
+    }
 
-    championRepo.remove(function(err) {
+    RiotApi.getChampions(function(champions) {
 
-      if (err) {
-        return res.negotiate(err);
-      }
-
-      RiotApi.getChampions(function(champions) {
-
-        let dataToInsert = [];
-
-        if (champions) {
-
-          champions.forEach(function(item) {
-
-            dataToInsert.push({
-              name: item.name,
-              riotId: item.id,
-              image: item.image.full
-            });
-
-          });
-
-          if (dataToInsert.length > 0) {
-
-            championRepo.put(dataToInsert, function(err) {
-
-              if (err) {
-                return res.negotiate(err);
-              }
-
-              res.redirect('/admin/');
-
-            });
-
-          } else {
-
-            res.redirect('/admin/');
-
-          }
-
-        }
-
-      });
+      ApiDataHandler.fillChampions(champions).then(redir, error);
 
     });
 

@@ -3,17 +3,19 @@
 const ChampionRepository = require('./repositories/ChampionRepository');
 const UserRepository = require('./repositories/UserRepository');
 const PatchRepository = require('./repositories/PatchRepository');
-const AttributeChangesRepository = require('./repositories/AttributeChangesRepository');
-
+const AttributeChangeRepository = require('./repositories/AttributeChangeRepository');
+const ChampionStatRepository = require('./repositories/ChampionStatRepository');
+const ChampionSpellRepository = require('./repositories/ChampionSpellRepository');
+const ChampionPassiveRepository = require('./repositories/ChampionPassiveRepository');
 
 /**
  * @class RepositoryStorage
  * @constructor
+ * @global
  */
 function RepositoryStorage() {
 
   let reposEntities = {};
-
 
   /**
    * @return {ChampionRepository}
@@ -54,55 +56,60 @@ function RepositoryStorage() {
   };
 
   /**
-   * @return {AttributeChangesRepository}
+   * @return {AttributeChangeRepository}
    */
-  this.getAttributeChangesRepository = function () {
+  this.getAttributeChangeRepository = function () {
 
-    if (!reposEntities.attributeChangesRepository) {
-      reposEntities.attributeChangesRepository = new AttributeChangesRepository();
+    if (!reposEntities.attributeChangeRepository) {
+      reposEntities.attributeChangeRepository = new AttributeChangeRepository();
     }
 
-    return reposEntities.attributeChangesRepository;
+    return reposEntities.attributeChangeRepository;
 
   };
 
-  // let repos = {};
-  // let reposEntities = {};
-  //
-  // function initStorage() {
-  //
-  //   for(let i in repositories) {
-  //
-  //     if (repositories.hasOwnProperty(i) && _.isFunction(repositories[i])) {
-  //
-  //       let repoName = repositories[i].name;
-  //
-  //       repos[repoName] = repositories[i];
-  //
-  //       this['get' + repoName] = function() {
-  //
-  //         if (!reposEntities[repoName]) {
-  //
-  //           reposEntities[repoName] = new repositories[i]();
-  //
-  //         }
-  //
-  //         return reposEntities[repoName];
-  //
-  //       }
-  //
-  //     }
-  //
-  //   }
-  //
-  // }
-  //
-  // initStorage();
+  /**
+   * @return {ChampionStatRepository}
+   */
+  this.getChampionStatRepository = function() {
+
+    if (!reposEntities.championStatRepository) {
+      reposEntities.championStatRepository = new ChampionStatRepository();
+    }
+
+    return reposEntities.championStatRepository;
+
+  };
+
+  /**
+   * @return {ChampionSpellRepository}
+   */
+  this.getChampionSpellRepository = function () {
+
+    if (!reposEntities.championSpellsRepository) {
+      reposEntities.championSpellsRepository = new ChampionSpellRepository();
+    }
+
+    return reposEntities.championSpellsRepository;
+
+  };
+
+  /**
+   * @return {ChampionPassiveRepository}
+   */
+  this.getChampionPassiveRepository = function() {
+
+    if (!reposEntities.championPassiveRepository) {
+      reposEntities.championPassiveRepository = new ChampionPassiveRepository();
+    }
+
+    return reposEntities.championPassiveRepository;
+
+  };
 
 }
 
 /**
  * @module
- * @type {RepositoryStorage}
  */
 module.exports = new RepositoryStorage();

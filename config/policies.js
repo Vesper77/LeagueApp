@@ -19,9 +19,9 @@
 
 module.exports.policies = {
 
-  'admin/AdminController': {
-    '*': 'isLoggedIn'
-  },
+  // 'admin/AdminController': {
+  //   '*': 'isLoggedIn'
+  // },
 
   'UserController': {
     'login': 'isNotLoggedIn',

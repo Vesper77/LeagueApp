@@ -1,13 +1,12 @@
+'use strict';
+
 const BaseRepository = require('./base/BaseRepository');
 
 /**
  * @class UserRepository
  * @extends BaseRepository
  */
-class UserRepository extends BaseRepository {
-  constructor() {
-    super('user');
-  }
-}
+function UserRepository() {}
+UserRepository.prototype = new BaseRepository('user');
 
 module.exports = UserRepository;

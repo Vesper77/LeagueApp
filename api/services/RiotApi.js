@@ -6,7 +6,8 @@ const request = require('request');
 const _ = require('lodash');
 
 /**
- * @class
+ * @class RiotApi
+ * @global
  */
 class RiotApi {
 
@@ -35,15 +36,11 @@ class RiotApi {
     function onResponse(err, response, body) {
 
       if (err !== null) {
-
         callback(null);
         return true;
-
       }
 
       let result = JSON.parse(body);
-
-      console.log(result);
 
       if (result && result['data']) {
 
@@ -73,7 +70,7 @@ class RiotApi {
 
     if (key) {
 
-      request('https://global.api.pvp.net/api/lol/static-data/euw/v1.2/champion?champData=all&api_key=' + key, onResponse);
+      request('https://global.api.pvp.net/api/lol/static-data/euw/v1.2/champion?champData=info,passive,spells,stats,image&api_key=' + key, onResponse);
 
     } else {
 
@@ -100,6 +97,7 @@ class RiotApi {
       }
 
       callback(JSON.parse(body));
+
       return true;
 
     }
@@ -107,13 +105,9 @@ class RiotApi {
     let key = sails.config.local.riotApiKey;
 
     if (key) {
-
       request('https://global.api.pvp.net/api/lol/static-data/euw/v1.2/versions?api_key=' + key, onResponse);
-
     } else {
-
       callback(null);
-
     }
 
   }

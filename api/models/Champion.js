@@ -1,4 +1,6 @@
 /**
+ * Champion.js
+ *
  * @module Champion
  * @type {{attributes: {name: {type: string, required: boolean}, riotId: {type: string, required: boolean}}}}
  */
@@ -12,7 +14,7 @@ module.exports = {
           required: true,
       },
       riotId: {
-          type: 'int',
+          type: 'integer',
           required: true
       },
       image: {

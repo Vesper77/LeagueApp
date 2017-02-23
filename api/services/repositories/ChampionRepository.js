@@ -1,13 +1,12 @@
+'use strict';
+
 const BaseRepository = require('./base/BaseRepository');
 
 /**
  * @class ChampionRepository
  * @extends BaseRepository
  */
-class ChampionRepository extends BaseRepository {
-  constructor() {
-    super('champion');
-  }
-}
+function ChampionRepository() {}
+ChampionRepository.prototype = new BaseRepository('champion');
 
 module.exports = ChampionRepository;

@@ -1,13 +1,12 @@
+'use strict';
+
 const BaseRepository = require('./base/BaseRepository');
 
 /**
  * @class PatchRepository
- * @extends BaseRepository
+ * @constructor
  */
-class PatchRepository extends BaseRepository {
-  constructor() {
-    super('patch');
-  }
-}
+function PatchRepository() {}
+PatchRepository.prototype = new BaseRepository('patch');
 
 module.exports = PatchRepository;

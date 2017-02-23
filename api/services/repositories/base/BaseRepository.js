@@ -1,110 +1,216 @@
 'use strict';
 
-const _ = require('lodash');
 /**
  * @class BaseRepository
  */
-const BaseRepository = (function() {
-  let modelName;
+function BaseRepository(name) {
 
-  class BaseRepository {
+  let modelName = name;
+  let model = null;
 
-    constructor(name) {
-      modelName = name;
-      this.getModel();
-    }
+  this.getModel = function() {
 
-    getModel() {
-
+    if (model === null) {
       if (modelName && sails.models[modelName]) {
-
-        this.modelEntity = sails.models[modelName];
-
-        return this.modelEntity;
-
+        model = sails.models[modelName];
       } else {
-        throw new Error('Can not find model with ' + modelName);
+        throw new Error('Can not find model with ' + name.toString());
       }
-
     }
 
-    getOne(params, next) {
-
-      if (_.isFunction(params)) {
-        next = params;
-        params = {};
-      }
-
-      let model = this.getModel();
-
-      model.findOne(params, next);
-
-    };
-
-    getMany(params, next) {
-
-      if (_.isFunction(params)) {
-        next = params;
-        params = {};
-      }
-
-      let model = this.getModel();
-
-      model.find(params, next);
-
-    };
-
-    put(data, next) {
-
-      let model = this.getModel();
-
-      model.create(data, next);
-
-    };
-
-    remove(params, next) {
-
-      if (_.isFunction(params)) {
-        next = params;
-        params = {};
-      }
-
-      let model = this.getModel();
-
-      model.destroy(params, next);
-
-    };
-
-    update(data, params, next) {
-
-      if (_.isFunction(params)) {
-        next = params;
-        params = {};
-      }
-
-      let model = this.getModel();
-
-      model.update(params, data, next);
-
-    };
-
-    count(params, next) {
-
-      if (_.isFunction(params)) {
-        next = params;
-        params = {};
-      }
-
-      let model = this.getModel();
-
-      model.count(params, next);
-
-    }
-
+    return model;
   }
 
-  return BaseRepository;
-})();
+}
+/**
+ *
+ * Return one row by params.
+ *
+ * @param {Object} [params]
+ * @return {Promise}
+ */
+BaseRepository.prototype.getOne = function(params) {
+
+  if (!params) {
+    params = {};
+  }
+
+  let model = this.getModel();
+
+  return new Promise((resolve, reject) => {
+
+    model.findOne(params, function(err, item) {
+
+      if (err) {
+        return reject(err);
+      }
+
+      return npmresolve(item);
+
+    })
+
+  });
+
+};
+
+/**
+ * Return rows by specific params
+ *
+ * @param {Object} [params]
+ * @return {Promise}
+ */
+BaseRepository.prototype.getMany = function(params) {
+
+  if (!params) {
+    params = {};
+  }
+
+  return new Promise((resolve, reject) =>{
+
+    let model = this.getModel();
+
+    model.find(params, function(err, items) {
+
+      if (err) {
+        return reject(err);
+      }
+
+      return resolve(items);
+
+    });
+
+  });
+};
+
+/**
+ * Insert data to database
+ *
+ * @param {Object} data
+ * @return {Promise}
+ */
+BaseRepository.prototype.put = function(data) {
+
+  let model = this.getModel();
+
+  return new Promise((resolve, reject) => {
+
+    model.create(data).exec(function(err, item) {
+
+      if (err) {
+        return reject(err);
+      }
+
+      return resolve(item);
+
+    });
+  });
+};
+
+/**
+ *
+ * Remove row(s) by params.
+ *
+ * @param {Object} [params]
+ * @return {Promise}
+ */
+BaseRepository.prototype.remove = function(params) {
+
+  if (!params) {
+    params = {};
+  }
+
+  let model = this.getModel();
+
+  return new Promise((resolve, reject) => {
+
+    model.destroy(params, function(err, result) {
+
+      if (err) {
+        return reject(err);
+      }
+
+      return resolve(result);
+
+    });
+
+  });
+
+};
+
+/**
+ * Update rows
+ *
+ * @param {Object} data
+ * @param {Object} [params]
+ * @return {Promise}
+ */
+BaseRepository.prototype.update = function(data, params) {
+
+  if (!params) {
+    params = {};
+  }
+
+  let model = this.getModel();
+
+  return new Promise((resolve, reject) => {
+
+    model.update(params, data).exec(function(err, result) {
+
+      if (err) {
+        return reject(err);
+      }
+
+      return resolve(result);
+
+    });
+
+  });
+
+};
+
+/**
+ *
+ * Return count of rows by params.
+ *
+ * @param {Object} [params]
+ * @return {Promise}
+ */
+BaseRepository.prototype.count = function(params) {
+
+  if (!params) {
+    params = {};
+  }
+
+  let model = this.getModel();
+
+  return new Promise((resolve, reject) => {
+
+    model.count(params).exec(function(err, count) {
+
+      if (err) {
+        return reject(err);
+      }
+
+      return resolve(count);
+
+    });
+
+  });
+
+};
+
+/**
+ * Return all attributes of model
+ *
+ * @return {Object}
+ */
+BaseRepository.prototype.attributes = function() {
+
+  let model = this.getModel();
+
+  return model.definition;
+
+};
 
 /**
  * @module
