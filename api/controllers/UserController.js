@@ -1,4 +1,10 @@
+'use strict';
+
 const url = require('url');
+
+/**
+ * @member {RepositoryStorage} RepositoryStorage
+ */
 /**
  * UserController
  *
@@ -35,7 +41,13 @@ module.exports = {
 
     if (req.method === 'POST') {
 
-      sails.models.user.create(req.params.all()).exec( function(err, user) {
+      let userRepo = RepositoryStorage.getUserRepository();
+
+      userRepo.put(req.params.all(), function(err, user) {
+
+        if (err) {
+          return res.negotiate(err);
+        }
 
         res.redirect('/user/login/');
 

@@ -2,9 +2,14 @@ const cheerio = require('cheerio');
 const fs = require('fs');
 const request = require('request');
 
-module.exports = new PatchParser();
+/** @module **/
+module.exports = PatchParser;
 
-
+/**
+ * @class PatchParser
+ * @param version
+ * @constructor
+ */
 function PatchParser(version) {
 
   let $ = null;

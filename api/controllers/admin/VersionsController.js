@@ -1,48 +1,54 @@
-const _ = require('lodash');
-const RiotApi = sails.services.riotapi;
+'use strict';
 
+const _ = require('lodash');
+
+/**
+ * @member {RepositoryStorage} RepositoryStorage
+ */
+/**
+ * @member {RiotApi} RiotApi
+ */
+
+/**
+ * @module
+ * @type {{fill: module.exports.fill, parsePatch: module.exports.parsePatch}}
+ */
 module.exports = {
 
   fill: function(req, res) {
 
-    sails.models.patch.destroy({}).exec(function(err) {
+    const patchRepo = RepositoryStorage.getPatchRepository();
+
+    patchRepo.remove(function(err) {
 
       if (err) {
         return res.negotiate(err);
-
       }
 
       RiotApi.getVersions(function(versions) {
 
         let dataToInsert = [];
 
-        if (versions) {
+        versions.forEach(function(item) {
 
-          versions.forEach(function(item) {
+          let shortVersion = RiotApi.getShortVersion(item);
 
-            let shortVersion = RiotApi.getShortVersion(item);
+          if (_.isString(shortVersion)) {
 
-            if (_.isString(shortVersion)) {
+            dataToInsert.push({
+              version: item,
+              shortVersion: shortVersion
+            });
 
-              dataToInsert.push({
-                version: item,
-                shortVersion: shortVersion
-              });
+          }
 
-            }
-
-          });
-
-        }
+        });
 
         if (dataToInsert.length > 0) {
 
-          sails.models.patch.create(dataToInsert).exec(function(err) {
+          patchRepo.put(dataToInsert, function(err) {
 
-            if (err) {
-              return res.negotiate(err);
-
-            }
+            if (err) { return res.negotiate(err); }
 
             return res.redirect('/admin/');
 
@@ -54,10 +60,10 @@ module.exports = {
 
         }
 
-
       });
 
-    })
+    });
+
   },
   parsePatch: function(req, res) {
 
@@ -79,11 +85,12 @@ module.exports = {
               after: attributeChange.attributeAfter
             };
 
-            sails.models.attributechanges.create(itemToInsert).exec(function(err, res) {
+            let attrbuteRepo = RepositoryStorage.getAttributeChangesRepository();
+            attrbuteRepo.put(itemToInsert, function(err, res) {
 
-              if (err == null) {
-                return false;
-              }
+              if (err) { res.negotiate(err); }
+
+              return res.redirect('/admin/');
 
             });
 
@@ -93,7 +100,6 @@ module.exports = {
 
       });
 
-      return res.redirect('/admin/');
 
     } else {
 

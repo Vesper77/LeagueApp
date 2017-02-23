@@ -1,10 +1,23 @@
-const RiotApi = sails.services.riotapi;
+'use strict';
 
+/**
+ * @member {RiotApi} RiotApi
+ */
+/**
+ * @member {RepositoryStorage} RepositoryStorage
+ */
+
+/**
+ * @module
+ * @type {{fill: module.exports.fill}}
+ */
 module.exports = {
 
   fill: function (req, res) {
 
-    sails.models.champion.destroy({}).exec(function(err) {
+    let championRepo = RepositoryStorage.getChampionRepository();
+
+    championRepo.remove(function(err) {
 
       if (err) {
         return res.negotiate(err);
@@ -28,7 +41,7 @@ module.exports = {
 
           if (dataToInsert.length > 0) {
 
-            sails.models.champion.create(dataToInsert).exec(function(err) {
+            championRepo.put(dataToInsert, function(err) {
 
               if (err) {
                 return res.negotiate(err);

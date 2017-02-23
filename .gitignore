@@ -116,9 +116,3 @@ npm-debug.log
 nbproject
 .idea
 .node_history
-
-#########################################
-#Keys.js
-#########################################
-
-api/services/Keys.js

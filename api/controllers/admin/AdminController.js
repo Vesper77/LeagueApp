@@ -1,22 +1,30 @@
+'use strict';
+
 const url = require('url');
 const layout = 'layouts/admin';
 
+/**
+ * @member {RepositoryStorage} RepositoryStorage
+ */
+
+/**
+ * @module
+ * @type {{home: module.exports.home}}
+ */
 module.exports = {
+
   home: function(req, res) {
 
-    sails.models.champion.count({}, function championCount(error, champCount) {
+    const champRepo = RepositoryStorage.getChampionRepository();
+    const patchRepo = RepositoryStorage.getPatchRepository();
 
-      if (error) {
+    champRepo.count(function championCount(error, champCount) {
 
-        return res.negotiate(error);
+      if (error) { return res.negotiate(error); }
 
-      }
+      patchRepo.getMany(function(err, items) {
 
-      sails.models.patch.find().exec(function(err, items) {
-
-        if (err) {
-          return res.negotiate(err);
-        }
+        if (err) { return res.negotiate(err); }
 
         let versCount = items.length;
 
@@ -27,4 +35,5 @@ module.exports = {
     });
 
   }
+
 };

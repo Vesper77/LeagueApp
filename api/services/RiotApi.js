@@ -1,9 +1,90 @@
+/* jshint strict: true */
+
+'use strict';
+
 const request = require('request');
 const _ = require('lodash');
 
-module.exports = {
+/**
+ * @class
+ */
+class RiotApi {
 
-  getVersions: function(callback) {
+  constructor() {}
+
+  getPatchChanges(callback) {
+
+    if (typeof callback != 'function') {
+      return false;
+    }
+
+    let PatchParser = sails.services.patchparser;
+
+    PatchParser.currentVersion = this.getShortVersion(version);
+
+    PatchParser.processHtml(function(result) {
+
+      callback(result);
+
+    });
+
+  }
+
+  getChampions(callback) {
+
+    function onResponse(err, response, body) {
+
+      if (err !== null) {
+
+        callback(null);
+        return true;
+
+      }
+
+      let result = JSON.parse(body);
+
+      console.log(result);
+
+      if (result && result['data']) {
+
+        let champions = [];
+
+        for(let i in result['data']) {
+
+          if (result['data'].hasOwnProperty(i)) {
+
+            champions.push(result['data'][i]);
+
+          }
+
+        }
+
+        callback(champions);
+
+      } else {
+
+        callback(null);
+
+      }
+
+    }
+
+    let key = sails.config.local.riotApiKey;
+
+    if (key) {
+
+      request('https://global.api.pvp.net/api/lol/static-data/euw/v1.2/champion?champData=all&api_key=' + key, onResponse);
+
+    } else {
+
+      callback(null);
+
+    }
+
+
+  }
+
+  getVersions(callback) {
 
     if (typeof callback != 'function') {
       return false;
@@ -35,98 +116,11 @@ module.exports = {
 
     }
 
-  },
-  getChampions: function(callback) {
-
-    if (typeof callback != 'function') {
-
-      return false;
-
-    }
-
-    function onResponse(err, response, body) {
-
-      if (err !== null) {
-
-        callback(null);
-        return true;
-
-      }
-
-      let result = JSON.parse(body);
-
-      if (result && result['data']) {
-
-        let champions = [];
-
-        for(let i in result['data']) {
-
-          if (result['data'].hasOwnProperty(i)) {
-
-            champions.push(result['data'][i]);
-
-          }
-
-        }
-
-        callback(champions);
-
-      } else {
-
-        callback(null);
-
-      }
-
-    }
-
-    let key = sails.config.local.riotApiKey;
-
-    if (key) {
-
-      request('https://global.api.pvp.net/api/lol/static-data/euw/v1.2/champion?champData=image&api_key=' + key, onResponse);
-
-    } else {
-
-      callback(null);
-
-    }
-
-  },
-  getPatchChanges: function(version, callback) {
-
-    if (typeof callback != 'function') {
-      return false;
-    }
-
-    let PatchParser = sails.services.patchparser;
-
-    PatchParser.currentVersion = this.getShortVersion(version);
-
-    PatchParser.processHtml(function(result) {
-
-      callback(result);
-
-    });
-
-  },
-  getShortVersion: function(version) {
-
-    if (_.isString(version)) {
-
-      let reqExp = new RegExp(/^\d+\.\d+/);
-
-      let shortVersion = reqExp.exec(version);
-
-      if (_.isArray(shortVersion)) {
-
-        return shortVersion[0].replace('.', '');
-
-      }
-
-    }
-
-    return version;
-
   }
 
-};
+}
+
+/**
+ * @module
+ */
+module.exports = new RiotApi();
