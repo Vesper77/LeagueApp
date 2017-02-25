@@ -23,3 +23,28 @@ body.content {
   color: #101010;
 }
 /** /Champions/ **/
+
+/** Items **/
+.item-block {
+  max-height : 93px;
+  margin-bottom: 30px;
+}
+.items {
+  text-align: center;
+}
+.items .items__search {
+  margin-bottom: 30px;
+}
+.items .item-block {
+  margin-bottom: 10px;
+}
+.items .item-block .item-block__inner {
+  padding: 5px;
+  display: inline-block;
+  text-align: center;
+}
+.items .item-block .item-block__inner > a {
+  text-decoration: none;
+  color: #101010;
+}
+/** Items/ **/
