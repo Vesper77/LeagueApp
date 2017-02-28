@@ -2,23 +2,21 @@ body.content {
   background-color: #f1f1f1;
 }
 /** Champions **/
-.champions {
-  text-align: center;
-}
-.champions .champions__search {
+
+.current .champions__search {
   margin-bottom: 20px;
 }
-.champions .champion-block {
+.current .champion-block {
   margin-bottom: 10px;
 }
-.champions .champion-block .champion-block__inner {
+.current .champion-block .champion-block__inner {
   padding: 5px;
   display: inline-block;
   text-align: center;
   /*border: 1px solid #ccc;*/
   /*background-color: #fff;*/
 }
-.champions .champion-block .champion-block__inner > a {
+.current .champion-block .champion-block__inner > a {
   text-decoration: none;
   color: #101010;
 }
@@ -29,22 +27,32 @@ body.content {
   max-height : 93px;
   margin-bottom: 30px;
 }
-.items {
-  text-align: center;
-}
-.items .items__search {
+.current .items__search {
   margin-bottom: 30px;
 }
-.items .item-block {
+.current .item-block {
   margin-bottom: 10px;
 }
-.items .item-block .item-block__inner {
+.current .item-block .item-block__inner {
   padding: 5px;
   display: inline-block;
   text-align: center;
 }
-.items .item-block .item-block__inner > a {
+.current .item-block .item-block__inner > a {
   text-decoration: none;
   color: #101010;
 }
 /** Items/ **/
+
+/** Search **/
+.search {
+  margin-bottom: 30px;
+}
+/** Search/ **/
+
+/** Current list **/
+.current {
+  text-align: center;
+
+}
+/** Current list **/

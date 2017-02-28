@@ -82,10 +82,11 @@
     }
   }
 
-  function itemSearch() {
 
-    var $input = $('#item-search');
-    var $items = $('#items');
+  function Search() {
+
+    var $input = $('#search');
+    var $items = $('#current');
     var oldInputVal = '';
     var itemsEles = [];
 
@@ -94,20 +95,9 @@
     }
 
     oldInputVal = $input.val();
+    itemsEles = $("div").find("[data-name]");
 
-    $items.find('.item-block[data-name]').each(function () {
 
-      var $this = $(this);
-
-      var name = $this.data('name');
-
-      if (name) {
-
-        itemsEles.push({$ele: $this, name: $this.data('name')});
-
-      }
-
-    });
 
     if (itemsEles.length > 0) {
 
@@ -119,15 +109,17 @@
 
           oldInputVal = val;
 
-          itemsEles.forEach(function (itemEle) {
+          itemsEles.each(function () {
+            var $this = $(this);
+            var name = $this.data('name');
 
-            if (itemEle.name.toLowerCase().indexOf(val.toLowerCase()) !== -1) {
+            if (name.toLowerCase().indexOf(val.toLowerCase()) !== -1) {
 
-              itemEle.$ele.removeClass(classToHide);
+              $this.removeClass(classToHide);
 
             } else {
 
-              itemEle.$ele.addClass(classToHide);
+              $this.addClass(classToHide);
 
             }
 
@@ -147,7 +139,9 @@
 
     championSearch();
 
-    itemSearch();
+    Search();
+
+    getElementByAttribute();
 
   });
 
