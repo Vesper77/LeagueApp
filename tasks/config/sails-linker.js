@@ -59,6 +59,20 @@ module.exports = function(grunt) {
       }
     },
 
+    devAdminJs: {
+      options: {
+        startTag: '<!--ADMIN SCRIPTS-->',
+        endTag: '<!--ADMIN SCRIPTS END-->',
+        fileTmpl: '<script src="%s"></script>',
+        appRoot: '.tmp/public',
+        relative: true
+      },
+      files: {
+        '.tmp/public/**/*.html': require('../pipeline').adminJsFilesToInject,
+        'views/**/*.html': require('../pipeline').adminJsFilesToInject,
+        'views/**/*.ejs': require('../pipeline').adminJsFilesToInject
+      }
+    },
     prodJs: {
       options: {
         startTag: '<!--SCRIPTS-->',
@@ -100,6 +114,21 @@ module.exports = function(grunt) {
         '.tmp/public/**/*.html': require('../pipeline').cssFilesToInject,
         'views/**/*.html': require('../pipeline').cssFilesToInject,
         'views/**/*.ejs': require('../pipeline').cssFilesToInject
+      }
+    },
+
+    devAdminStyles: {
+      options: {
+        startTag: '<!--ADMIN STYLES-->',
+        endTag: '<!--ADMIN STYLES END-->',
+        fileTmpl: '<link rel="stylesheet" href="%s">',
+        appRoot: '.tmp/public'
+      },
+
+      files: {
+        '.tmp/public/**/*.html': require('../pipeline').adminCssFilesToInject,
+        'views/**/*.html': require('../pipeline').adminCssFilesToInject,
+        'views/**/*.ejs': require('../pipeline').adminCssFilesToInject
       }
     },
 

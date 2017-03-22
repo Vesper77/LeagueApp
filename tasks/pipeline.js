@@ -11,35 +11,36 @@
  *   https://github.com/balderdashy/sails-docs/blob/master/anatomy/myApp/tasks/pipeline.js.md
  */
 
+"use strict";
 
 // CSS files to inject in order
 //
 // (if you're using LESS with the built-in default config, you'll want
 //  to change `assets/styles/importer.less` instead.)
 var cssFilesToInject = [
-  'styles/**/*.css'
+  'styles/**/*.css',
+  '!styles/admin/*.css'
 ];
 // Client-side javascript files to inject in order
 // (uses Grunt-style wildcard/glob/splat expressions)
 var jsFilesToInject = [
-
-  // Load sails.io before everything else
-  // 'js/dependencies/sails.io.js',
-
-  // Dependencies like jQuery, or Angular are brought in here
   'js/dependencies/jquery-*.js',
   'js/dependencies/bootstrap.min.js',
   'js/dependencies/riot+compile.min.js',
-  // 'js/dependencies/**/*.js',
-
-  // All of the rest of your client-side js files
-  // will be injected here in no particular order.
   'js/*.js'
 ];
 
 //Riot template
 var riotTemplates = [
   'tags/*.tag'
+];
+//Admin styles
+var cssAdminFilesToInject = [
+  'styles/admin/*.css'
+];
+//Admin js files
+var jsAdminFilesToInject = [
+  'js/admin/*.js'
 ];
 
 // Client-side HTML templates are injected using the sources below
@@ -58,9 +59,8 @@ var templateFilesToInject = [
 // Default path for public folder (see documentation for more information)
 var tmpPath = '.tmp/public/';
 
-// Prefix relative paths to source files so they point to the proper locations
-// (i.e. where the other Grunt tasks spit them out, or in some cases, where
-// they reside in the first place)
+
+//Css/Js/RiotTpl
 module.exports.cssFilesToInject = cssFilesToInject.map(function(cssPath) {
   // If we're ignoring the file, make sure the ! is at the beginning of the path
   if (cssPath[0] === '!') {
@@ -88,6 +88,22 @@ module.exports.riotTplFilesToInject = riotTemplates.map(function(riotTplPath) {
     return require('path').join('!.tmp/public/', riotTplPath.substr(1));
   }
   return require('path').join('.tmp/public/', riotTplPath);
+});
+
+//Admin Css/Js
+module.exports.adminCssFilesToInject = cssAdminFilesToInject.map(function(cssPath) {
+  // If we're ignoring the file, make sure the ! is at the beginning of the path
+  if (cssPath[0] === '!') {
+    return require('path').join('!.tmp/public/', cssPath.substr(1));
+  }
+  return require('path').join('.tmp/public/', cssPath);
+});
+module.exports.adminJsFilesToInject = jsAdminFilesToInject.map(function(jsPath) {
+  // If we're ignoring the file, make sure the ! is at the beginning of the path
+  if (jsPath[0] === '!') {
+    return require('path').join('!.tmp/public/', jsPath.substr(1));
+  }
+  return require('path').join('.tmp/public/', jsPath);
 });
 
 

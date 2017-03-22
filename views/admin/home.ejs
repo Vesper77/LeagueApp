@@ -5,7 +5,7 @@
         В базе на данным момент: <%= championsCount %> чемпионов
     </p>
 
-    <form action="<%= sails.config.appUrl + 'admin/champions/fill' %>" method="post">
+    <form action="<%= sails.config.appUrl + 'admin/champion/fill' %>" method="post">
         <button type="submit" class="btn btn-primary btn-lg">Заполнить заново</button>
     </form>
 
@@ -17,26 +17,8 @@
     В базе на данным момент: <%= versionsCount %> версий
   </p>
 
-  <form action="<%= sails.config.appUrl + 'admin/versions/fill' %>" method="post">
+  <form action="<%= sails.config.appUrl + 'admin/patch/fill-versions' %>" method="post">
     <button type="submit" class="btn btn-primary btn-lg">Заполнить заново</button>
-  </form>
-
-</div>
-<div class="jumbotron">
-  <h1>Запарсить патч</h1>
-
-  <form action="<%= sails.config.appUrl + 'admin/versions/parse' %>" method="post">
-
-    <p> Выберите версию
-      <select name="version">
-        <% for(var i = 0; i < versionsCount; i++){%>
-          <option value="<%= versions[i].shortVersion %>"><%= versions[i].version %></option>
-        <% } %>
-      </select>
-    </p>
-
-    <button type="submit" class="btn btn-primary btn-lg">Заполнить заново</button>
-
   </form>
 
 </div>

@@ -45,19 +45,23 @@ module.exports.routes = {
   /** Frontend routes **/
 
   '/user/login': 'UserController.login',
+  'post /user/logout': 'UserController.logout',
   '/user/register': 'UserController.signup',
-  '/': 'ChampionsController.index',
+  '/': 'ChampionController.index',
 
   /** /Frontend routes/**/
 
 
   /** Admin Routes **/
 
-  '/admin': 'admin/AdminController.home',
-  'post /user/logout': 'UserController.logout',
-  'post /admin/champions/fill': 'admin/ChampionsController.fill',
-  'post /admin/versions/fill': 'admin/VersionsController.fill',
-  'post /admin/versions/parse': 'admin/VersionsController.parsePatch'
+  'get /admin': 'admin/AdminController.home',
+  'get /admin/champion': 'admin/ChampionController.index',
+  'get /admin/champion/:championId': 'admin/ChampionController.data',
+  'get /admin/patch': 'admin/PatchController.index',
+  'get /admin/patch/:patchId': 'admin/PatchController.data',
+  'post /admin/champion/fill': 'admin/ChampionController.fill',
+  'post /admin/patch/fill-versions': 'admin/PatchController.fillVersions',
+  'post /admin/patch/parse': 'admin/PatchController.parse',
 
   /** /Admin Routes/ **/
 

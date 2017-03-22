@@ -27,6 +27,7 @@
     "request": "^2.79.0",
     "sails": "~0.12.11",
     "sails-disk": "~0.10.9",
+    "sails-generate-hook": "0.0.1",
     "sails-mongo": "^0.12.2"
   },
   "scripts": {

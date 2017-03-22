@@ -1,10 +1,17 @@
 'use strict';
 
+/**
+ * ChampionPassive.js
+ *
+ * @description :: Passive spells of champions
+ * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
+ */
+
+
 module.exports = {
   attributes: {
     champion: {
-      type: 'float',
-      required: true
+      model: 'champion'
     },
     name: {
       type: 'string',
@@ -18,7 +25,5 @@ module.exports = {
       type: 'string',
       required: true
     }
-  },
-
-  tableName: sails.config.models.tablePrefix + '_championPassive'
+  }
 };

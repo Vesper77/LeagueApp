@@ -1,8 +1,10 @@
+'use strict';
+
 /**
  * Champion.js
  *
- * @module Champion
- * @type {{attributes: {name: {type: string, required: boolean}, riotId: {type: string, required: boolean}}}}
+ * @description :: Champions
+ * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
 
 module.exports = {
@@ -13,15 +15,19 @@ module.exports = {
           type: 'string',
           required: true,
       },
+      key: {
+        type: 'string',
+        required: true
+      },
       riotId: {
           type: 'integer',
-          required: true
+          required: true,
+          unique: true
       },
       image: {
           type: 'string',
           required: true
       }
 
-  },
-  tableName: sails.config.models.tablePrefix + '_champion'
+  }
 };

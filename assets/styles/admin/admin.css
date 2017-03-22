@@ -1,0 +1,12 @@
+.table tbody tr td.icons .icon--action {
+  font-size: 16px;
+  padding: 0 5px;
+  cursor: pointer;
+}
+.table tbody tr td.icons .icon--action.load {
+  color: #000000;
+}
+.table tbody tr td.icons .icon--action.load:hover {
+  color: #db5e00;
+}
+

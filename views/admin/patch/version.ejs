@@ -1,0 +1,31 @@
+<%
+/**
+ * @member {Array} changes
+ */
+%>
+
+<% if (changes && changes.length) { %>
+
+  <table class="table">
+    <thead>
+      <th>Attribute</th>
+      <th>Before</th>
+      <th>Change</th>
+      <th>After</th>
+      <th>New</th>
+      <th>Champion</th>
+    </thead>
+    <tbody>
+      <% changes.forEach(function(item) { %>
+        <tr>
+          <td><%= item.attribute %></td>
+          <td><%= item.attributeBefore %></td>
+          <td><%= item.attributeChange %></td>
+          <td><%= item.attributeAfter %></td>
+          <td><%= item.isNew %></td>
+          <td><a href="<%= sails.getRoute('champion', '', 'admin') %>"><%= item.champion.name %></a></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% } %>

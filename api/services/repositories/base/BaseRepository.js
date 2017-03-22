@@ -1,5 +1,13 @@
 'use strict';
 
+const _ = require('lodash');
+
+/**
+ * @module
+ * @type {BaseRepository}
+ */
+module.exports = BaseRepository;
+
 /**
  * @class BaseRepository
  */
@@ -27,9 +35,10 @@ function BaseRepository(name) {
  * Return one row by params.
  *
  * @param {Object} [params]
+ * @param {Object} [populate]
  * @return {Promise}
  */
-BaseRepository.prototype.getOne = function(params) {
+BaseRepository.prototype.getOne = function(params, populate) {
 
   if (!params) {
     params = {};
@@ -39,15 +48,19 @@ BaseRepository.prototype.getOne = function(params) {
 
   return new Promise((resolve, reject) => {
 
-    model.findOne(params, function(err, item) {
+    let query = model.findOne(params);
+
+    query = populateProcess(query, populate);
+
+    query.exec(function(err, item) {
 
       if (err) {
         return reject(err);
       }
 
-      return npmresolve(item);
+      return resolve(item);
 
-    })
+    });
 
   });
 
@@ -59,7 +72,7 @@ BaseRepository.prototype.getOne = function(params) {
  * @param {Object} [params]
  * @return {Promise}
  */
-BaseRepository.prototype.getMany = function(params) {
+BaseRepository.prototype.getMany = function(params, populate) {
 
   if (!params) {
     params = {};
@@ -69,7 +82,11 @@ BaseRepository.prototype.getMany = function(params) {
 
     let model = this.getModel();
 
-    model.find(params, function(err, items) {
+    let query = model.find(params);
+
+    query = populateProcess(query, populate);
+
+    query.exec(function(err, items) {
 
       if (err) {
         return reject(err);
@@ -211,9 +228,47 @@ BaseRepository.prototype.attributes = function() {
   return model.definition;
 
 };
-
 /**
- * @module
- * @type {BaseRepository}
+ * Populate query
+ *
+ * @param {Object} query
+ * @param {(String|Object|Array)} populate
+ * @return {Object}
  */
-module.exports = BaseRepository;
+function populateProcess(query, populate) {
+
+  if (query) {
+
+    if (_.isString(populate)) {
+
+      query = query.populate(populate);
+
+    } else if(_.isArray(populate)) {
+
+      populate.forEach(function(item) {
+
+        if (_.isString(item)) {
+          query = query.populate(item);
+        }
+
+      });
+
+    } else if (_.isObject(populate)) {
+
+      for(var i in populate) {
+
+        if (populate.hasOwnProperty(i) && _.isString(i) && _.isObject(populate[i])) {
+
+          query = query.populate(i, populate[i]);
+
+        }
+
+      }
+
+    }
+
+    return query;
+
+  }
+
+}
