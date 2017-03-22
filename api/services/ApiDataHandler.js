@@ -18,53 +18,6 @@ module.exports = new ApiDataHandler();
  */
 function ApiDataHandler() {
 
-  let _this = this;
-
-  /**
-   * Insert data, that was get by api.
-   * @param {Array} attributeChanges
-   * @return {Promise}
-   */
-  this.insertAttributeChanges = function(attributeChanges) {
-
-    if (!(attributeChanges && _.isArray(attributeChanges))) {
-
-      return new Promise((resolve, reject) => {
-        return reject(new Error('Bad data of attribute changes for insert'));
-      });
-
-    } else {
-
-      let dataToInsert = [];
-
-      attributeChanges.forEach(function (hero) {
-
-        hero.attributesChanges.forEach(function (attributeChange) {
-
-          dataToInsert.push({
-            attribute: attributeChange.attribute,
-            isNew: attributeChange.isNew,
-            change: attributeChange.attributeChange,
-            before: attributeChange.attributeBefore,
-            after: attributeChange.attributeAfter
-          });
-
-        });
-
-      });
-
-      return new Promise((resolve, reject) => {
-
-        let attributeChangesRepo = RepositoryStorage.getAttributeChangeRepository();
-
-        attributeChangesRepo.put(dataToInsert).then(resolve, reject);
-
-      });
-
-    }
-
-  };
-
   /**
    * Fill version, by data was get by api.
    *
@@ -78,24 +31,17 @@ function ApiDataHandler() {
 
       versions.forEach(function(item) {
 
-        let shortVersion = _this.getShortVersion(item);
-
-        if (_.isString(shortVersion)) {
-
-          dataToInsert.push({
-            version: item,
-            shortVersion: shortVersion
-          });
-
-        }
+        dataToInsert.push({
+          version: item
+        });
 
       });
 
-      return  new Promise((resolve, reject) => {
+      return new Promise((resolve, reject) => {
 
         let patchRepo = RepositoryStorage.getPatchRepository();
 
-        return patchRepo.remove().then(() => { return patchRepo.put(dataToInsert);}, resolve).then(resolve, reject);
+        return patchRepo.remove().then(() => { return patchRepo.put(dataToInsert);}, reject).then(resolve, reject);
 
       });
 
@@ -138,7 +84,8 @@ function ApiDataHandler() {
         championsToInsert.push({
           name: champion.name,
           riotId: championId,
-          image: champion.image.full
+          image: champion.image.full,
+          key: champion.key
         });
         /** /Data of champion to insert/ **/
 
@@ -199,15 +146,15 @@ function ApiDataHandler() {
         }
 
         function insertStats() {
-          return statsRepo.put(statsToInsert);
+          return championRepo.fillChampionByRiotIds(statsToInsert, 'champion', 'champion').then((stats) => { return statsRepo.put(stats); }, errorCatch);
         }
 
         function insertSpells() {
-          return spellsRepo.put(spellsToInsert);
+          return championRepo.fillChampionByRiotIds(spellsToInsert, 'champion', 'champion').then((spells) => { return spellsRepo.put(spells); }, errorCatch);
         }
 
         function insertPassives() {
-          return passivesRepo.put(passiveToInsert);
+          return championRepo.fillChampionByRiotIds(passiveToInsert, 'champion', 'champion').then((passives) => { return passivesRepo.put(passives); }, errorCatch);
         }
 
         function errorCatch(err) {
@@ -233,29 +180,5 @@ function ApiDataHandler() {
     }
 
   };
-
-  /**
-   * Get short-hand version
-   * @param {String} version
-   * @return {String}
-   */
-  this.getShortVersion = function(version) {
-
-    if (_.isString(version)) {
-
-      let reqExp = new RegExp(/^\d+\.\d+/);
-
-      let shortVersion = reqExp.exec(version);
-
-      if (_.isArray(shortVersion)) {
-
-        return shortVersion[0].replace('.', '');
-
-      }
-
-    }
-
-    return version;
-  }
 
 }

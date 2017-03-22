@@ -1,21 +1,35 @@
+_ = require('lodash');
 /**
  * Patch.js
  *
- * @description :: TODO: You might write a short summary of how this model works and what it represents here.
+ * @description :: Patch of League of Legends
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
 
 module.exports = {
   attributes: {
+
     version: {
       type: 'string',
       required: true
     },
-    shortVersion: {
-      type: 'string',
-      required: true
-    }
-  },
 
-  tableName: sails.config.models.tablePrefix + '_patch'
+    // Functions
+    getShortVersion: function() {
+
+      if (_.isString(this.version)) {
+
+        let reqExp = new RegExp(/^\d+\.\d+/);
+
+        let shortVersion = reqExp.exec(this.version);
+
+        if (_.isArray(shortVersion)) {
+          return shortVersion[0].replace('.', '');
+        }
+      }
+
+      return this.version;
+
+    }
+  }
 };

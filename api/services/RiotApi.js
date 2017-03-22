@@ -1,5 +1,3 @@
-/* jshint strict: true */
-
 'use strict';
 
 const request = require('request');
@@ -11,104 +9,92 @@ const _ = require('lodash');
  */
 class RiotApi {
 
-  constructor() {}
+  /**
+   * Get champions from riot api.
+   *
+   * @return {Promise}
+   */
+  getChampions() {
 
-  getPatchChanges(callback) {
+    return new Promise((resolve, reject) => {
 
-    if (typeof callback != 'function') {
-      return false;
-    }
+      function onResponse(err, response, body) {
 
-    let PatchParser = sails.services.patchparser;
+        if (err !== null) {
+          return reject(err);
+        }
 
-    PatchParser.currentVersion = this.getShortVersion(version);
+        let result = JSON.parse(body);
 
-    PatchParser.processHtml(function(result) {
+        if (result && result['data']) {
 
-      callback(result);
+          let champions = [];
 
-    });
+          for(let i in result['data']) {
 
-  }
+            if (result['data'].hasOwnProperty(i)) {
 
-  getChampions(callback) {
+              champions.push(result['data'][i]);
 
-    function onResponse(err, response, body) {
-
-      if (err !== null) {
-        callback(null);
-        return true;
-      }
-
-      let result = JSON.parse(body);
-
-      if (result && result['data']) {
-
-        let champions = [];
-
-        for(let i in result['data']) {
-
-          if (result['data'].hasOwnProperty(i)) {
-
-            champions.push(result['data'][i]);
+            }
 
           }
 
+          return resolve(champions);
+
+        } else {
+
+          return reject(new Error('Bad response'));
+
         }
-
-        callback(champions);
-
-      } else {
-
-        callback(null);
 
       }
 
-    }
+      let key = sails.config.local.riotApiKey;
 
-    let key = sails.config.local.riotApiKey;
+      if (key) {
 
-    if (key) {
+        request('https://global.api.pvp.net/api/lol/static-data/euw/v1.2/champion?champData=info,passive,spells,stats,image&api_key=' + key, onResponse);
 
-      request('https://global.api.pvp.net/api/lol/static-data/euw/v1.2/champion?champData=info,passive,spells,stats,image&api_key=' + key, onResponse);
+      } else {
 
-    } else {
+        reject(new Error('No riot api key'));
 
-      callback(null);
+      }
 
-    }
+    });
 
 
   }
 
-  getVersions(callback) {
+  /**
+   * Get all version from riot api.
+   *
+   * @return {Promise}
+   */
+  getVersions() {
 
-    if (typeof callback != 'function') {
-      return false;
-    }
+    return new Promise((resolve, reject) => {
 
-    function onResponse(error, response, body) {
+      let key = sails.config.local.riotApiKey;
 
-      if (error !== null) {
+      let onResponse = function(err, response, body) {
 
-        callback(null);
-        return true;
+        if (err !== null) {
+          return reject(err);
+        }
 
+        return resolve(JSON.parse(body));
+
+      };
+
+      if (key) {
+        request('https://global.api.pvp.net/api/lol/static-data/euw/v1.2/versions?api_key=' + key, onResponse);
+      } else {
+        reject(new Error('No riot api key.'));
       }
 
-      callback(JSON.parse(body));
-
-      return true;
-
-    }
-
-    let key = sails.config.local.riotApiKey;
-
-    if (key) {
-      request('https://global.api.pvp.net/api/lol/static-data/euw/v1.2/versions?api_key=' + key, onResponse);
-    } else {
-      callback(null);
-    }
+    });
 
   }
 
@@ -116,5 +102,6 @@ class RiotApi {
 
 /**
  * @module
+ * @global
  */
 module.exports = new RiotApi();

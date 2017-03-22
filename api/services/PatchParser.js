@@ -1,9 +1,11 @@
+"use strict";
+
 const cheerio = require('cheerio');
-const fs = require('fs');
 const request = require('request');
 
 /**
  * @module
+ * @type {PatchParser}
  **/
 module.exports = PatchParser;
 
@@ -15,10 +17,18 @@ module.exports = PatchParser;
  */
 function PatchParser(version) {
 
-  let $ = null;
-
+  //Public fields
   this.currentVersion = version;
 
+  //Private fields
+  let $ = null;
+
+  //Public functions
+  /**
+   * Get url for version.
+   *
+   * @return {null|string}
+   */
   this.getUrlVersion = function() {
 
     if (this.currentVersion) {
@@ -31,81 +41,101 @@ function PatchParser(version) {
 
   };
 
-  this.getHtml = function(next) {
+  /**
+   * Return html code for patch
+   *
+   * @return {Promise}
+   */
+  this.getHtml = function() {
 
-    function onResponse(err, response, body) {
+    return new Promise((resolve, reject) => {
 
-      if (err || response.statusCode != 200) {
-        next(null);
-        return false;
+      function onResponse(err, response, body) {
+
+        if (err || response.statusCode != 200) {
+          return reject(err);
+        }
+
+        return resolve(body);
+
       }
 
-      next(body);
+      let options = {
+        url: this.getUrlVersion(),
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'
+        }
+      };
 
-    }
+      request(options, onResponse);
 
-    let options = {
-      url: this.getUrlVersion(),
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'
-      }
-    };
+    });
 
-    request(options, onResponse);
 
   };
 
-  this.processHtml = function(next) {
+  /**
+   * Process html
+   *
+   * @return {Promise}
+   */
+  this.processHtml = function() {
 
-    function process(html){
+    return new Promise((resolve, reject) => {
 
-      if (!html) {
-        next(null);
-        return false;
+      function process(html){
+
+        if (!html) {
+          return reject(new Error('No html there'));
+        }
+
+        $ = cheerio.load(html);
+
+        let $start = $('header.header-primary #patch-champions').parent();
+
+        let championChanges = $start.nextUntil('.header-primary', '.content-border');
+
+        let result = [];
+
+        championChanges.each(function(index, item) {
+
+          let $item = $(item);
+
+          result.push(processChampionChangeBlock($item));
+
+        });
+
+        return resolve(result);
+
       }
 
-      $ = cheerio.load(html);
+      return this.getHtml().then(process, reject);
 
-      let $start = $('header.header-primary #patch-champions').parent();
-
-      let championChanges = $start.nextUntil('.header-primary', '.content-border');
-
-      let result = [];
-
-      championChanges.each(function(index, item) {
-
-        let $item = $(item);
-
-        result.push(processChampionChangeBlock($item));
-
-      });
-
-      next(result);
-
-    }
-
-    this.getHtml(process);
+    });
 
   };
+
+  //Private function
 
   function processChampionChangeBlock($block) {
 
     let $championTitle = $block.find('h3.change-title');
 
     let result = {
-      championId: null,
+      championKey: null,
       attributesChanges: []
     };
 
     if ($championTitle.attr('id')) {
 
-      result.championId = $championTitle.attr('id').replace('patch-', '');
+      result.championKey= $championTitle.attr('id').replace('patch-', '');
 
     } else {
 
-      result.championId = $championTitle.text().trim().toLowerCase();
+      result.championKey = $championTitle.text().trim().toLowerCase();
 
     }
+
 
     let $attributeChanges = $block.find('div.attribute-change');
 

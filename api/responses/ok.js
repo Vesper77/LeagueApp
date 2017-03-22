@@ -35,17 +35,6 @@ module.exports = function sendOK (data, options) {
 
   let viewData = data;
 
-  // Attempt to prettify data for views, if it's a non-error object
-  // var viewData = data;
-  // if (!(viewData instanceof Error) && 'object' == typeof viewData) {
-  //   try {
-  //     viewData = require('util').inspect(data, {depth: null});
-  //   }
-  //   catch(e) {
-  //     viewData = undefined;
-  //   }
-  // }
-
   // If a view was provided in options, serve it.
   // Otherwise try to guess an appropriate view, or if that doesn't
   // work, just send JSON.

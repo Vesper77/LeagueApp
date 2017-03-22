@@ -1,15 +1,16 @@
 'use strict';
 
 /**
- * Model of champion stats
+ * ChampionStat.js
  *
- * @module
+ * @description :: Stats of champions
+ * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
+
 module.exports = {
   attributes: {
     champion: {
-      type: 'integer',
-      required: true
+      model: 'champion',
     },
     armor: {
       type: 'float',
@@ -92,7 +93,5 @@ module.exports = {
       type: 'float',
       required: true
     }
-  },
-
-  tableName: sails.config.models.tablePrefix + '_championStat'
+  }
 };

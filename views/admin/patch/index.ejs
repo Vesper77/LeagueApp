@@ -1,0 +1,45 @@
+<%
+/**
+ * @member {Array} versions
+ */
+/**
+ * @member {Object} sails
+ */
+
+%>
+
+<h3 class="page-header">Запарсить патч</h3>
+<form method="post" action="/admin/patch/parse" class="form-inline">
+
+  <div class="form-group">
+    <label for="patch-version">Версия патча: </label>
+    <select id="patch-version" name="patchId" class="form-control">
+      <% for(var i in versions) { %>
+        <option value="<%= versions[i].id %>"><%= versions[i].version %></option>
+      <% } %>
+    </select>
+  </div>
+
+  <button class="btn btn-primary" type="submit">Начать</button>
+
+</form>
+
+<table class="table">
+  <thead>
+    <th><%= __('version') %></th>
+    <th><%= __('num_changes') %></th>
+    <th><%= __('actions') %></th>
+  </thead>
+  <tbody>
+    <% for(let i in versions){ %>
+      <tr>
+        <td><%= versions[i].version %></td>
+        <td>0</td>
+        <td class="icons">
+          <a href="<%= sails.getRoute('patch', 'load/' + versions[i].id, 'admin') %>"><span class="icon--action glyphicon glyphicon-save load"></span></a>
+          <a href="<%= sails.getRoute('patch', versions[i].id, 'admin') %>"><span class="glyphicon glyphicon-pencil icon--action edit"></span></a>
+        </td>
+      </tr>
+    <%} %>
+  </tbody>
+</table>
