@@ -56,13 +56,11 @@ module.exports.routes = {
 
   'get /admin': 'admin/AdminController.home',
   'get /admin/champion': 'admin/ChampionController.index',
-  'get /admin/champion/:championId': 'admin/ChampionController.data',
   'get /admin/patch': 'admin/PatchController.index',
   'get /admin/patch/:patchId': 'admin/PatchController.data',
   'post /admin/champion/fill': 'admin/ChampionController.fill',
   'post /admin/patch/fill-versions': 'admin/PatchController.fillVersions',
-  'post /admin/patch/parse': 'admin/PatchController.parse',
-
+  'get /admin/patch/load/:patchId': 'admin/PatchController.parse'
   /** /Admin Routes/ **/
 
 };

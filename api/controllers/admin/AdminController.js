@@ -4,15 +4,24 @@ const url = require('url');
 const layout = 'layouts/admin';
 
 /**
- * @member {RepositoryStorage} RepositoryStorage
+ * @namespace AdminControllers
  */
 
 /**
- * @module
- * @type {{home: module.exports.home}}
+ * @class AdminController
+ * @memberOf AdminControllers
  */
 module.exports = {
 
+  /**
+   * @method
+   * @instance
+   * @memberOf AdminControllers.AdminController
+   * @name home
+   * @description Home Action
+   * @param {Object} req
+   * @param {Object} res
+   */
   home: function(req, res) {
 
     let champRepo = RepositoryStorage.getChampionRepository();

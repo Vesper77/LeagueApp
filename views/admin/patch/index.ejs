@@ -1,16 +1,22 @@
 <%
 /**
- * @member {Array} versions
+ * @var {Array} versions
  */
 /**
- * @member {Object} sails
+ * @var {Object} sails
  */
-
+/**
+ * @var {Router} Router
+ */
 %>
 
-<h3 class="page-header">Запарсить патч</h3>
-<form method="post" action="/admin/patch/parse" class="form-inline">
-
+<h3 class="page-header">
+  Запарсить патч
+  <form method="post" action="<%- Router.getRoute('patch', 'fill-versions', 'admin') %>">
+    <button class="btn btn-primary" type="submit">Загрузить все версии патча</button>
+  </form>
+</h3>
+<form method="post" action="<%- Router.getRoute('patch', 'parse', 'admin') %>" class="form-inline">
   <div class="form-group">
     <label for="patch-version">Версия патча: </label>
     <select id="patch-version" name="patchId" class="form-control">
@@ -36,8 +42,8 @@
         <td><%= versions[i].version %></td>
         <td>0</td>
         <td class="icons">
-          <a href="<%= sails.getRoute('patch', 'load/' + versions[i].id, 'admin') %>"><span class="icon--action glyphicon glyphicon-save load"></span></a>
-          <a href="<%= sails.getRoute('patch', versions[i].id, 'admin') %>"><span class="glyphicon glyphicon-pencil icon--action edit"></span></a>
+          <a href="<%= Router.getRoute('patch', 'load/' + versions[i].id, 'admin') %>"><span class="icon--action glyphicon glyphicon-save load"></span></a>
+          <a href="<%= Router.getRoute('patch', versions[i].id, 'admin') %>"><span class="glyphicon glyphicon-pencil icon--action edit"></span></a>
         </td>
       </tr>
     <%} %>

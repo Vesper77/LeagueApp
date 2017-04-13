@@ -1,7 +1,15 @@
-const RiotApi = sails.services.riotapi;
-//TODO: add item stats
+/**
+ * @module Items Controller
+ */
 module.exports = {
 
+  /**
+   * @function
+   * @name fill
+   * @description Fill items list.
+   * @param {Object} req
+   * @param {Object} res
+   */
   fill: function (req, res) {
 
     sails.models.items.destroy({}).exec(function(err) {

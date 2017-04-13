@@ -3,17 +3,18 @@
 const url = require('url');
 
 /**
- * @member {RepositoryStorage} RepositoryStorage
+ * @class UserController
+ * @memberOf Controllers
  */
-/**
- * UserController
- *
- * @description :: Server-side logic for managing Users
- * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
- */
-
 module.exports = {
 
+  /**
+   * Log in user.
+   * @instance
+   * @memberOf Controllers.UserController
+   * @param {Object} req
+   * @param {Object} res
+   */
   login: function(req, res){
 
     if (req.method === 'POST') {
@@ -24,11 +25,20 @@ module.exports = {
 
     } else {
 
-      res.ok('user/login');
+      res.ok('user/slogin');
 
     }
   },
 
+  /**
+   * @method
+   * @name logout
+   * @instance
+   * @description Log out user
+   * @memberOf Controllers.UserController
+   * @param {Object} req
+   * @param {Object} res
+   */
   logout: function(req, res) {
 
     req.logout();
@@ -37,6 +47,15 @@ module.exports = {
 
   },
 
+  /**
+   * @method
+   * @name signup
+   * @instance
+   * @description Create new user.
+   * @memberOf Controllers.UserController
+   * @param {Object} req
+   * @param {Object} res
+   */
   signup: function(req, res) {
 
     if (req.method === 'POST') {
@@ -54,9 +73,7 @@ module.exports = {
       });
 
     } else {
-
       res.ok('user/register');
-
     }
 
   }

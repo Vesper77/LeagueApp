@@ -7,6 +7,9 @@
 /**
  * @var {Array} champions
  */
+/**
+ * @var {Router} Router
+ */
 %>
 
 <div class="current" id="current">
@@ -25,7 +28,7 @@
       <div class="col-md-3 col-xs-6 col-sm-4 col-lg-2 champion-block" data-name="<%= champion.name %>">
         <div class="champion-block__inner">
           <a href="#" onclick="return false;">
-            <img class="champion-block__image" src="http://ddragon.leagueoflegends.com/cdn/7.2.1/img/champion/<%- champion.image %>"/>
+            <img class="champion-block__image" src="<%- Router.dataImage('champions/previews/' + champion.key + '.png') %>"/>
             <p class="champion-block__name"><%= champion.name %></p>
           </a>
         </div>

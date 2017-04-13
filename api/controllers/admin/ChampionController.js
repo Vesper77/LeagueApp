@@ -1,45 +1,48 @@
 'use strict';
+/**
+ *  @var {ApiDataHandler} ApiDataHandler
+ */
+/**
+ * @var {RiotApi} RiotApi
+ */
+/**
+ * @var {RepositoryStorage} RepositoryStorage
+ */
+
+/**
+ * @module Admin Champion Controller
+ */
 
 const layout = 'layouts/admin';
 
-/**
- * @member {RiotApi} RiotApi
- */
-/**
- * @member {ApiDataHandler} ApiDataHandler
- */
-
-/**
- * @member {RepositoryStorage} RepositoryStorage
- */
-
-/**
- * @module
- * @type {{fill: module.exports.fill}}
- */
 module.exports = {
 
+  /**
+   * Get champion list.
+   *
+   * @param {Object} req
+   * @param {Object} res
+   */
   index: function(req, res) {
 
     let resolve = function(champions) {
-      return res.ok({'layout': layout, champions: champions});
-    };
-    let error = function(err) {
-      return res.negotiate(err);
+      return res.ok({layout: layout, champions: champions, view: 'admin/champion/index'});
     };
 
-    RepositoryStorage.getChampionRepository().getMany().then(resolve, error);
+    RepositoryStorage.getChampionRepository().getMany().then(resolve, res.serverError);
   },
 
+  /**
+   * Fill champions to database.
+   *
+   * @param {Object} req
+   * @param {Object} res
+   */
   fill: function (req, res) {
 
     function redir() { return res.redirect('/admin/'); }
-    function error(err) {
-      return res.negotiate(err);
-    }
 
-    RiotApi.getChampions().then(ApiDataHandler.fillChampions, error).then(redir, error);
-
+    RiotApi.getChampions().then(ApiDataHandler.fillChampions, res.serverError).then(redir, res.serverError);
   }
 
 };

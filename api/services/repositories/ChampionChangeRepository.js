@@ -4,10 +4,6 @@ const BaseRepository = require('./base/BaseRepository');
 const _ = require('lodash');
 
 /**
- * Repository ChampionChangeRepository
- */
-
-/**
  * @class ChampionChangeRepository
  * @extends BaseRepository
  */

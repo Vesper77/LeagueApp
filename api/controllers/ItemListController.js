@@ -1,8 +1,25 @@
-const RiotApi = sails.services.riotapi;
+"use strict";
 
-module.exports = {
+/**
+ * Controllers
+ * @namespace Controllers
+ */
 
-  index: function(req, res) {
+module.exports = new ItemListController();
+
+/**
+ * @class ItemListController
+ * @constructor
+ * @memberOf Controllers
+ */
+function ItemListController() {
+
+  /**
+   * Show list of items.
+   * @param {Object} req
+   * @param {Object} res
+   */
+  this.index = function(req, res) {
 
     sails.models.items.find().exec(
 
@@ -19,7 +36,6 @@ module.exports = {
     );
 
   }
-
-};
+}
 
 

@@ -11,7 +11,6 @@ class RiotApi {
 
   /**
    * Get champions from riot api.
-   *
    * @return {Promise}
    */
   getChampions() {
@@ -69,7 +68,6 @@ class RiotApi {
 
   /**
    * Get all version from riot api.
-   *
    * @return {Promise}
    */
   getVersions() {

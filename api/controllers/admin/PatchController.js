@@ -4,16 +4,13 @@ const layout = 'layouts/admin';
 const _ = require('lodash');
 
 /**
- * @member {RepositoryStorage} RepositoryStorage
+ * @var {RepositoryStorage} RepositoryStorage
  */
 /**
- * @member {PatchParser} PatchParser
+ * @var {RiotApi} RiotApi
  */
 /**
- * @member {RiotApi} RiotApi
- */
-/**
- * @member {ApiDataHandler} ApiDataHandler
+ * @var {ApiDataHandler} ApiDataHandler
  */
 
 /**
@@ -25,7 +22,7 @@ module.exports = {
 
     let getVersion = function(versions) { return res.ok({layout: layout, versions: versions}, 'admin/patch/index'); };
 
-    return RepositoryStorage.getPatchRepository().getMany().then(getVersion, res.serverError)
+    return RepositoryStorage.getPatchRepository().getLastVersion().then(getVersion, res.serverError)
 
   },
 

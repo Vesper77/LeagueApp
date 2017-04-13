@@ -10,8 +10,6 @@ const _ = require('lodash');
 function ChampionRepository() {}
 ChampionRepository.prototype = new BaseRepository('champion');
 
-module.exports = ChampionRepository;
-
 /**
  * Get champions riot ids by names
  * @param {Array} championKeys
@@ -33,6 +31,13 @@ ChampionRepository.prototype.getChampionsByKey = function(championKeys) {
 
 };
 
+/**
+ * Fill champions by riot ids.
+ * @param {Array} items
+ * @param {String} riotIdKey
+ * @param {String} fieldKey
+ * @return {Promise}
+ */
 ChampionRepository.prototype.fillChampionByRiotIds = function(items, riotIdKey, fieldKey) {
 
   return new Promise((resolve, reject) => {
@@ -86,3 +91,5 @@ ChampionRepository.prototype.fillChampionByRiotIds = function(items, riotIdKey, 
   });
 
 };
+
+module.exports = ChampionRepository;

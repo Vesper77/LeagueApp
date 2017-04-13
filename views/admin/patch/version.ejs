@@ -1,6 +1,9 @@
 <%
 /**
- * @member {Array} changes
+ * @var {Array} changes
+ */
+/**
+ * @var {Router} Router
  */
 %>
 
@@ -23,7 +26,7 @@
           <td><%= item.attributeChange %></td>
           <td><%= item.attributeAfter %></td>
           <td><%= item.isNew %></td>
-          <td><a href="<%= sails.getRoute('champion', '', 'admin') %>"><%= item.champion.name %></a></td>
+          <td><a href="<%= Router.getRoute('champion', item.champion.id, 'admin') %>"><%= item.champion.name %></a></td>
         </tr>
       <% }) %>
     </tbody>

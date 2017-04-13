@@ -3,12 +3,6 @@
 const _ = require('lodash');
 
 /**
- * @module
- * @type {BaseRepository}
- */
-module.exports = BaseRepository;
-
-/**
  * @class BaseRepository
  */
 function BaseRepository(name) {
@@ -31,9 +25,7 @@ function BaseRepository(name) {
 
 }
 /**
- *
  * Return one row by params.
- *
  * @param {Object} [params]
  * @param {Object} [populate]
  * @return {Promise}
@@ -68,8 +60,8 @@ BaseRepository.prototype.getOne = function(params, populate) {
 
 /**
  * Return rows by specific params
- *
  * @param {Object} [params]
+ * @param {Object} [populate]
  * @return {Promise}
  */
 BaseRepository.prototype.getMany = function(params, populate) {
@@ -101,7 +93,6 @@ BaseRepository.prototype.getMany = function(params, populate) {
 
 /**
  * Insert data to database
- *
  * @param {Object} data
  * @return {Promise}
  */
@@ -124,9 +115,7 @@ BaseRepository.prototype.put = function(data) {
 };
 
 /**
- *
  * Remove row(s) by params.
- *
  * @param {Object} [params]
  * @return {Promise}
  */
@@ -156,7 +145,6 @@ BaseRepository.prototype.remove = function(params) {
 
 /**
  * Update rows
- *
  * @param {Object} data
  * @param {Object} [params]
  * @return {Promise}
@@ -186,9 +174,7 @@ BaseRepository.prototype.update = function(data, params) {
 };
 
 /**
- *
  * Return count of rows by params.
- *
  * @param {Object} [params]
  * @return {Promise}
  */
@@ -218,7 +204,6 @@ BaseRepository.prototype.count = function(params) {
 
 /**
  * Return all attributes of model
- *
  * @return {Object}
  */
 BaseRepository.prototype.attributes = function() {
@@ -230,7 +215,6 @@ BaseRepository.prototype.attributes = function() {
 };
 /**
  * Populate query
- *
  * @param {Object} query
  * @param {(String|Object|Array)} populate
  * @return {Object}
@@ -255,7 +239,7 @@ function populateProcess(query, populate) {
 
     } else if (_.isObject(populate)) {
 
-      for(var i in populate) {
+      for(let i in populate) {
 
         if (populate.hasOwnProperty(i) && _.isString(i) && _.isObject(populate[i])) {
 
@@ -268,7 +252,10 @@ function populateProcess(query, populate) {
     }
 
     return query;
-
   }
-
 }
+
+/**
+ * @module Base Repository
+ */
+module.exports = BaseRepository;

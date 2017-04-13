@@ -23,6 +23,10 @@ module.exports = function(grunt) {
         cwd: './assets',
         src: ['**/*.!(coffee|less)'],
         dest: '.tmp/public'
+      },{
+        cwd: './data',
+        src: ['**/*'],
+        dest: '.tmp/public/data'
       }]
     }
   });

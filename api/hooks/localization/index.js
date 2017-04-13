@@ -15,8 +15,7 @@ module.exports = function() {
               req.setLocale(lang);
 
               if (req.user && req.user.lang != lang) {
-
-                User.update({_id : req.user._id}, {lang: lang});
+                RepositoryStorage.getUserRepository().update({lang: lang}, {id : req.user.id});
 
               }
 

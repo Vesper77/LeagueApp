@@ -24,10 +24,6 @@ module.exports = {
       required: true
     }
 
-
-
-
-  },
-  tableName: sails.config.models.tablePrefix + '_item'
+  }
 };
 

@@ -2,12 +2,17 @@
 /**
  * @member {Array} champions
  */
+/**
+ * @member {Router} Router
+ */
 
 %>
 
 <div class="page-header">
   <h1>Персонажи</h1>
-  <a href="<%= sails.getRoute('champion', 'fill', 'admin') %>" class="btn btn-primary right"> Загрузить персанажей заново</a>
+  <form action="<%= Router.getRoute('champion', 'fill', 'admin') %>" method="post">
+    <button disabled type="submit" class="btn btn-primary right"> Загрузить персанажей заново</button>
+  </form>
 </div>
 <table class="table table-hover">
   <thead>
@@ -18,11 +23,11 @@
     </tr>
   </thead>
   <tbody>
-    <% champions.forEach(function(item, index) { %>
+    <% champions.forEach(function(champion, index) { %>
       <tr>
-        <td><%= item.name %></td>
-        <td><%= item.riotId %></td>
-        <td><%= item.image %></td>
+        <td><%= champion.name %></td>
+        <td><%= champion.riotId %></td>
+        <td><a target="_blank" href="<%- Router.dataImage('champions/previews/' + champion.image) %>"><%= champion.image %></a></td>
       </tr>
     <% }) %>
   </tbody>

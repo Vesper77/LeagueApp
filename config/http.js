@@ -1,3 +1,7 @@
+"use strict";
+
+const mime = require('mime-types');
+
 /**
  * HTTP Server Settings
  * (sails.config.http)
@@ -30,23 +34,23 @@ module.exports.http = {
   *                                                                          *
   ***************************************************************************/
 
-    // order: [
-    //   'startRequestTimer',
-    //   'cookieParser',
-    //   'session',
-    //   'myRequestLogger',
-    //   'bodyParser',
-    //   'handleBodyParserError',
-    //   'compress',
-    //   'methodOverride',
-    //   'poweredBy',
-    //   '$custom',
-    //   'router',
-    //   'www',
-    //   'favicon',
-    //   '404',
-    //   '500'
-    // ],
+    order: [
+      'startRequestTimer',
+      'dataFilesLoad',
+      'cookieParser',
+      'session',
+      'bodyParser',
+      'handleBodyParserError',
+      'compress',
+      'methodOverride',
+      'poweredBy',
+      '$custom',
+      'router',
+      'www',
+      'favicon',
+      '404',
+      '500'
+    ],
 
   /****************************************************************************
   *                                                                           *
@@ -54,10 +58,28 @@ module.exports.http = {
   *                                                                           *
   ****************************************************************************/
 
-    // myRequestLogger: function (req, res, next) {
-    //     console.log("Requested :: ", req.method, req.url);
-    //     return next();
-    // }
+    dataFilesLoad: function (req, res, next) {
+
+      let path = req.path.substr(1);
+
+      if (/^data\//.test(path)) {
+        /**
+         * @var {FileStreamHelper} FileStreamHelper
+         */
+        FileStreamHelper.getFile(path).then((file) => {
+
+          let mimeType = mime.lookup(path);
+
+          res.status(200);
+          res.set("Content-Type", mimeType);
+          res.end(file, 'binary');
+
+        }, () => { return res.notFound(); });
+      } else {
+        return next();
+      }
+
+    }
 
 
   /***************************************************************************

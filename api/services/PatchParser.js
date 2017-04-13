@@ -4,7 +4,7 @@ const cheerio = require('cheerio');
 const request = require('request');
 
 /**
- * @module
+ * @module PatchParser
  * @type {PatchParser}
  **/
 module.exports = PatchParser;
